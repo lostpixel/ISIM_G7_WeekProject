@@ -1,7 +1,8 @@
 """
 --Fiche de classe/fonction-- 
 
-nom : 
+nom fichier : fichier_de_code
+nom fonction : fonction_a_tester
 fonction/utilité attendue : 
 type valeur en entrée : 
 type valeur en sortie : 
@@ -10,3 +11,5 @@ liste appel d'autre fonction :
 	- 
 	- 
 """
+
+
