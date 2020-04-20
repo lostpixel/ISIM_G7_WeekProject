@@ -5,9 +5,14 @@ nom : Case
 fonction/utilité attendue : 
 	- Construction d'une Case
 	- Retour de son contenu en fonction de son état.
+	- Définir une case comme Bombe
+	- Augmenter le nombre de Bombe dans le voisinage
+	- Changer l'état Drapeau
 type valeur en entrée : /
-type valeur en sortie : 
-	- Objet Case et son contenu
+type valeur en sortie :
+	- Objet Case
+	- Bool : EstBombe, EstVisible, EstDrapeau
+	- Int : ANbrBombesVoisins
 liste appel d'autre fonction : /
 """
 
