@@ -1,0 +1,12 @@
+"""
+--Fiche de classe/fonction-- 
+
+nom : 
+fonction/utilité attendue : 
+type valeur en entrée : 
+type valeur en sortie : 
+liste appel d'autre fonction : 
+	-
+	- 
+	- 
+"""
