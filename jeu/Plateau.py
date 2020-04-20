@@ -18,7 +18,7 @@ liste appel d'autre fonction :
 	- PlacerMines
 		- SignalerMineAuxVoisins
 """
-
+from Case import Case
 import random
 
 class Plateau():
@@ -64,7 +64,7 @@ class Plateau():
 			"""
 			La colonne est donc le reste de la division ci-dessus
 			"""
-			self.cases[caseIndex].mine = true #On passe l'état de la case choisie à miné.
+			self.cases[caseIndex].DevenirBombe() #La Case devient une bombe
 			self.SignalerMineAuxVoisins(ligne, colonne)
 			
 	def SignalerMineAuxVoisins(self, ligne, colonne):
@@ -89,5 +89,5 @@ class Plateau():
 		"""
 		for L in range(max(0,ligne-1), min(ligne+1, self.hauteur-1)):
 			for C in range(max(0,colonne-1), min(colonne+1, self.largeur-1)):
-				self.cases[L * self.largeur + C].bomsVois += 1
+				self.cases[L * self.largeur + C].AvoirMineVoisine() #On signale à la case qu'elle a une mine parmi ses voisins
 		
