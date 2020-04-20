@@ -39,26 +39,26 @@ class Case():
 		else :
 			return 'drapeau' if self.drapeau else '' #On affiche le drapeau si elle en a un.
 			
-	def DevenirBombe(self):
+	def DevenirBombe(self): #La case devient piègée
 		self.mine = True
 		
 	def EstUneBombe(self):
 		return self.mine
 	
-	def RendreVisible(self):
+	def RendreVisible(self): #La case est découverte
 		self.visible = True
 		
 	def EstVisible(self):
 		return self.visible
 		
-	def ChangeDrapeau(self):
+	def ChangeDrapeau(self): #On pose ou on retire un drapeau
 		self.drapeau = !(self.drapeau)
 	
 	def EstDrapeau(self):
 		return self.drapeau
 	
-	def AvoirMineVoisine(self):
-		self.bomsVois += 1
+	def AvoirMineVoisine(self): #La case a une mine parmi ses voisins
+		self.bomsVois += 1 #On augment le nombre de ses voisins de 1
 		
 	def ANbrBombesVoisins(self):
 		return self.bomsVois
