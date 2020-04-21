@@ -157,7 +157,7 @@ class Plateau():
 				for L in range(max(0,ligne-1), min(ligne+2, self.hauteur)):
 					for C in range(max(0,colonne-1), min(colonne+2, self.largeur)):
 						#Et on les joue
-						self.CreuseCase(L, C)
+						self.CreuserCase(L, C)
 			#On finit par vérifier si la partie est gagnée
 			self.gameOver = self.Gagner()
 	
@@ -170,7 +170,7 @@ class Plateau():
 				case = self.cases[L * self.largeur + C]
 				if self.gameOver and case.EstUneBombe():
 					print("M ", end ='')
-				if not case.EstVisible():
+				elif not case.EstVisible():
 					if case.EstDrapeau():
 						print("D ", end='')
 					else:
