@@ -1,0 +1,12 @@
+# Exemple de test unitaire pour une addition avec assert
+ 
+"""
+	from fichier_de_code import fonction_a_tester
+	 
+	assert fonction_a_tester(1, 1) == 2  # test de l'addition
+	assert fonction_a_tester(1, -1) == 0 # test avec chiffre négatif
+	assert fonction_a_tester(4, 2) == 6 # test avec autre chose que des 1
+	assert fonction_a_tester(4.5, 2) == 6.5 # test avec des floats
+
+"""
+# Exemple de test d'intégration 
