@@ -29,7 +29,9 @@ class Plateau():
 	- hauteur 			-> Int : Nombre de lignes du plateau
 	- largeur 			-> Int : Nombre de colonne du plateau
 	- nbr_Mines			-> Int : Nombre de mines sur le plateau
+	- nbr_drapeau		-> Int : Nombre de drapeau sur la grille
 	- nbr_Cases_Caches 	-> Int (hauteur * largeur) : Nombre de cases cachées au départ
+	- gameOver			-> Bool : Indique la fin de partie. True = Partie Perdue
 	"""
 	
 	def __init__(self, type_partie, hauteur, largeur, nbr_mines):
@@ -37,9 +39,12 @@ class Plateau():
 		
 		self.hauteur = hauteur
 		self.largeur = largeur
-		self.nbr_Mines = 0
+		self.nbr_Mines = 0 #Nombre de drapeau sur la grille
+		self.nbr_drapeau = 0 #Nombre de mines sur la grille
 		self.nbr_Cases_Caches = hauteur * largeur
+		self.gameOver = False
 		self.cases = []
+		
 		self.remplirCases() #Initialisation du plateau
 		self.determinerMines(type_partie, nbr_mines)
 		
@@ -106,4 +111,72 @@ class Plateau():
 		for L in range(max(0,ligne-1), min(ligne+2, self.hauteur)):
 			for C in range(max(0,colonne-1), min(colonne+2, self.largeur)):
 				self.cases[L * self.largeur + C].AvoirMineVoisine() #On signale à la case qu'elle a une mine parmi ses voisins
+	
+	def Gagner(self):
+		#Verifie que le nombre de case cachées est égale au nombre de mine
+		return self.nbr_Cases_Caches == self.nbr_Mines
+	
+	def Draper(self, ligne, colonne):
 		
+		#Pose ou retire un drapeau à la position (ligne, colonne)
+		#Incrémente ou décrémente le nombre de nbr_drapeau du plateau en fonction
+		#ne fait rien si le contenu de la cellule est visible
+		
+		
+		#On récupère l'index de la case
+		case = self.cases[ligne * self.largeur + colonne]
+		if not case.EstVisible(): #Si la case n'est pas visible
+			case.ChangeDrapeau() #On change l'état Drapeau
+			if case.EstDrapeau():
+				self.nbr_drapeau +=1
+			else:
+				self.nbr_drapeau -=1
+				
+	def CreuserCase(self, ligne, colonne):
+		#Creuse la case à la position (ligne, colonne)
+		
+		#On récupère l'index de la case
+		case = self.cases[ligne * self.largeur + colonne]
+		
+		#Si la case est visible ou a un drapeau, on ne fait rien
+		if case.EstVisible() or case.EstDrapeau():
+			return
+		#Sinon, on rend visible le contenu et on diminue le nombre de cases cachées
+		else:
+			case.RendreVisible()
+			self.nbr_Cases_Caches -=1
+			
+			#Si la case est minée, la partie est perdue
+			#Donc, si EstBombe est différent de 0
+			if (case.EstUneBombe() > 0):
+				self.gameOver = True
+			
+			#Si la case n'a aucune bombe dans parmi ses voisins
+			if (case.ANbrBombesVoisins() == 0):
+				#On parcout ses voisins
+				for L in range(max(0,ligne-1), min(ligne+2, self.hauteur)):
+					for C in range(max(0,colonne-1), min(colonne+2, self.largeur)):
+						#Et on les joue
+						self.CreuseCase(L, C)
+			#On finit par vérifier si la partie est gagnée
+			self.gameOver = self.Gagner()
+	
+	def AfficherTableau(self):
+		#Retourne la grille sous forme de string, Affichage Test
+		
+		for L in range(self.hauteur):
+			print(" ", end='')
+			for C in range(self.largeur) :
+				case = self.cases[L * self.largeur + C]
+				if self.gameOver and case.EstUneBombe():
+					print("M ", end ='')
+				if not case.EstVisible():
+					if case.EstDrapeau():
+						print("D ", end='')
+					else:
+						print("X ", end='')
+				else:
+					print("%d " % (case.ANbrBombesVoisins()), end ='')	
+			print ()
+		print()
+		print()
