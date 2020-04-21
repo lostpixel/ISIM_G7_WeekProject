@@ -32,23 +32,38 @@ class Plateau():
 	- nbr_Cases_Caches 	-> Int (hauteur * largeur) : Nombre de cases cachées au départ
 	"""
 	
-	def __init__(self, hauteur, largeur, nbr_mines):
+	def __init__(self, type_partie, hauteur, largeur, nbr_mines):
 		#Initialisation du plateau
 		
 		self.hauteur = hauteur
 		self.largeur = largeur
-		self.nbr_Mines = nbr_mines
+		self.nbr_Mines = 0
 		self.nbr_Cases_Caches = hauteur * largeur
 		self.cases = []
 		self.remplirCases() #Initialisation du plateau
-		self.placerMines(nbr_mines)
+		self.determinerMines(type_partie, nbr_mines)
 		
 	def remplirCases(self):
 		#Remplit le plateau de cases initialisée
 		
 		self.cases = [Case() for x in range(self.hauteur * self.largeur)]
+		
+	def determinerMines(self, type_partie, nbr_mines):
+		LETHAL = 1
+		PROPA = 2
+		TIMER = 3
+		COUP = 4
+		
+		if (type_partie < 2):
+			self.placerMines(nbr_mines, 1)
+		else:
+			nbr_spcl_mines = nbr_mines // 5
+			self.placerMines(nbr_mines - 3*nbr_spcl_mines, 1)
+			self.placerMines(nbr_spcl_mines, 2)
+			self.placerMines(nbr_spcl_mines, 3)
+			self.placerMines(nbr_spcl_mines, 4)
 
-	def placerMines(self, nbr_mines):
+	def placerMines(self, nbr_mines, type):
 		#Place les mines aléatoirement dans le plateau
 		
 		for x in range(nbr_mines):
@@ -64,8 +79,9 @@ class Plateau():
 			"""
 			La colonne est donc le reste de la division ci-dessus
 			"""
-			self.cases[caseIndex].DevenirBombe() #La Case devient une bombe
+			self.cases[caseIndex].DevenirBombe(type) #La Case devient une bombe
 			self.SignalerMineAuxVoisins(ligne, colonne)
+			self.nbr_Mines +=1
 			
 	def SignalerMineAuxVoisins(self, ligne, colonne):
 		"""
@@ -87,7 +103,7 @@ class Plateau():
 				- L-1 à L+1
 				- C-1 à C+1
 		"""
-		for L in range(max(0,ligne-1), min(ligne+1, self.hauteur-1)):
-			for C in range(max(0,colonne-1), min(colonne+1, self.largeur-1)):
+		for L in range(max(0,ligne-1), min(ligne+2, self.hauteur)):
+			for C in range(max(0,colonne-1), min(colonne+2, self.largeur)):
 				self.cases[L * self.largeur + C].AvoirMineVoisine() #On signale à la case qu'elle a une mine parmi ses voisins
 		
