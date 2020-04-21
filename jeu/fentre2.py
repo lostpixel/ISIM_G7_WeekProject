@@ -4,6 +4,7 @@ nom : Fenetre
 
 fonction/utilité attendue : interface graphique : frame, radio, label, combo, bouton 
 type valeur en entrée :
+type valeur en sortie : 
 liste appel d'autre fonction :
     guide
     jeux
