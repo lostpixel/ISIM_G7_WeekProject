@@ -16,6 +16,7 @@ class testCase(unittest.TestCase):
 	def setUp(self):			#1
 		self.case01 = Case()	#1
 
+"""
 	def testRetourCase(self): 	#2
 		self.case01.mine = True
 		self.case01.drapeau = True
@@ -28,15 +29,17 @@ class testCase(unittest.TestCase):
 		self.assertEqual(False,self.case01.drapeau)
 		self.assertEqual(False,self.case01.visible)
 		self.assertEqual(0,self.case01.bomsVois)
-	
+"""
+
 	def testDevenirBombe(self):	#2
 		self.case01.mine = False
 		self.case01.DevenirBombe()
 		self.assertEqual(True,self.case01.mine)
 	
-	# def EstUneBombe
+	 def EstUneBombe (self):
+                 
 	
-	# def testRendreVisible(self):	#2
+	 def testRendreVisible(self):	#2
 		#self.case01.visible = False
 		# self.case01.RendreVisible()
 	#	self.assert(True,self.case01.visible)
@@ -45,7 +48,7 @@ class testCase(unittest.TestCase):
 	
 	# def EstVisible
 	
-	assert self.case01.EstVisible(self) == True
+	# assert self.case01.EstVisible(self) == True
 
 	def testChangeDrapeau(self):	#2
 		self.case01.drapeau = False
@@ -62,4 +65,4 @@ class testCase(unittest.TestCase):
 	# def ANbrBombesVoisins
 
 
-print("executed")
+print("excuted test_Case")
