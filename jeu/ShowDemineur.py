@@ -3,7 +3,7 @@ from Plateau import Plateau
 class Jeu():
 
 	def __init__(self):
-		self.plateau = Plateau(0, 5, 5, 3)
+		self.plateau = Plateau(0, 9, 9, 10)
 		self.creuse = True
 		
 	def Run(self):
@@ -32,9 +32,9 @@ class Jeu():
 		
 		L, C = [int(num) for num in in_str.split()]
 		if self.creuse:
-			self.plateau.CreuserCase(L, C)
+			self.plateau.CreuserCase(L-1, C-1)
 		else:
-			self.plateau.Draper(L, C)
+			self.plateau.Draper(L-1, C-1)
 			
 if __name__ == '__main__':
 	j = Jeu()
