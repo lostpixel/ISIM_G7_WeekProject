@@ -35,14 +35,14 @@ class Case():
 		self.bomsVois = 0			#Elle n'a pas de bombes dans son voisinnage
 	
 	def RetourCase(self):
-		#Retourne un caractère symboliasant l'état de la cas.
+		#Retourne un caractère symboliasant l'état de la cas. Affichage Test
 		if self.visible: #Si la case est découverte
-			if self.Mine: #Si elle a une mine
-				return 'Mine'
+			if self.mine > 0: #Si elle a une mine
+				return 'M'
 			else: #Si elle n'a pas de mine
-				return str(self.bomsVois) if self.bomsVois else '' #On retoune le nombre de bombes voisines si elle en a
+				return str(self.bomsVois) if self.bomsVois else ' ' #On retoune le nombre de bombes voisines si elle en a
 		else :
-			return 'drapeau' if self.drapeau else '' #On affiche le drapeau si elle en a un.
+			return 'D' if self.drapeau else 'X' #On affiche le drapeau si elle en a un.
 			
 	def DevenirBombe(self, level): #La case devient piègée
 		self.mine = level
