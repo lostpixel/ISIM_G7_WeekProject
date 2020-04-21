@@ -15,48 +15,54 @@ class testCase(unittest.TestCase):
 
 	def setUp(self):			#1
 		self.case01 = Case()	#1
-
-"""
-	def testRetourCase(self): 	#2
-		self.case01.mine = True
-		self.case01.drapeau = True
-		self.case01.visible = True
-		self.case01.bomsVois = 9
-		
-		self.case01.RetourCase()
-		
-		self.assertEqual(False,self.case01.mine)
-		self.assertEqual(False,self.case01.drapeau)
-		self.assertEqual(False,self.case01.visible)
-		self.assertEqual(0,self.case01.bomsVois)
-"""
+#
+#	def testRetourCase(self): 	#2
+#		self.case01.mine = True
+#		self.case01.drapeau = True
+#		self.case01.visible = True
+#		self.case01.bomsVois = 9
+#		
+#		self.case01.RetourCase()
+#		
+#		self.assertEqual(False,self.case01.mine)
+#		self.assertEqual(False,self.case01.drapeau)
+#		self.assertEqual(False,self.case01.visible)
+#		self.assertEqual(0,self.case01.bomsVois)
 
 	def testDevenirBombe(self):	#2
 		self.case01.mine = False
 		self.case01.DevenirBombe()
 		self.assertEqual(True,self.case01.mine)
-	
-	 def EstUneBombe (self):
-                 
-	
-	 def testRendreVisible(self):	#2
-		#self.case01.visible = False
-		# self.case01.RendreVisible()
-	#	self.assert(True,self.case01.visible)
 
-	
-	
-	# def EstVisible
-	
-	# assert self.case01.EstVisible(self) == True
+	def testEstUneBombe(self):
+		self.case01.mine = True
+		self.assertEqual(True,self.case01.EstUneBombe())
+		self.case01.mine = False
+		self.assertEqual(False,self.case01.EstUneBombe())		
+
+
+	def testRendreVisible(self):	#2
+		self.case01.visible = False
+		self.case01.RendreVisible()
+		self.assertEqual(True,self.case01.visible)
+
+	def testEstVisible (self):
+		self.case01.visible = True
+		self.assertEqual(True,self.case01.EstVisible())
+		self.case01.visible = False
+		self.assertEqual(False,self.case01.EstVisible())		
 
 	def testChangeDrapeau(self):	#2
 		self.case01.drapeau = False
 		self.case01.ChangeDrapeau()
 		self.assertEqual(True,self.case01.drapeau)
 
-	# def EstDrapeau
-	
+	def testEstDrapeau(self):	
+		self.case01.drapeau = True
+		self.assertEqual(True,self.case01.EstDrapeau())
+		self.case01.drapeau = False
+		self.assertEqual(False,self.case01.EstDrapeau())	
+
 	def testAvoirMineVoisine(self):	#2
 		self.case01.bomsVois = 0
 		self.case01.AvoirMineVoisine()
@@ -65,4 +71,4 @@ class testCase(unittest.TestCase):
 	# def ANbrBombesVoisins
 
 
-print("excuted test_Case")
+print("Acces to test_Case OK")
