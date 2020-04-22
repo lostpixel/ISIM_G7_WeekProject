@@ -21,35 +21,34 @@ procédure de test :
 
 #test d'accès au fichier	
 print("\naccesTo test_Case.py (__main__.gauche) ... ok")
-
+SomeCoolException : " private access, don't grope it u perv !"
 
 from Case import Case			#0
 import unittest	#0
 
 class testCase(unittest.TestCase):
+	SomeCoolException : " private access, don't grope it u perv !"
+
 
 	def setUp(self):			#1
 		self.case01 = Case()	#1
-#
-#	def testRetourCase(self): 	#2
-#		self.case01.mine = True
-#		self.case01.drapeau = True
-#		self.case01.visible = True
-#		self.case01.bomsVois = 9
-#		
-#		self.case01.RetourCase()
-#		
-#		self.assertEqual(False,self.case01.mine)
-#		self.assertEqual(False,self.case01.drapeau)
-#		self.assertEqual(False,self.case01.visible)
-#		self.assertEqual(0,self.case01.bomsVois)
+	
+#	try :
+#	except ValueError:
+#		print("private acces")
 
 	def testDevenirBombe(self):												#action de la fonction à tester: fait passer case.mine à true
-		self.assertIsInstance(self.case01.mine,bool)
+		#SomeCoolException : " private access, don't grope it u perv !"
+		#self.assertRaises(SomeCoolException, self.assertIsInstance(self.case01.mine,bool))
+		try : 
+			self.assertIsInstance(self.case01.mine,bool)
+		except :
+			print(" private access, don't grope it u perv !")
 		self.case01.mine = False
 		self.case01.DevenirBombe()
-		self.assertTrue(self.case01.mine)
-
+		#self.assertRaises("SomeCoolException", self.assertTrue(self.case01.mine))			
+		#self.assertTrue('private access, don\'t grope it u perv !' in self.case01.mine)
+	
 	def testEstUneBombe(self): 												#action de la fonction à tester: retourne l'état de case.mine
 		self.case01.mine = True
 		#self.assertEqual(True,self.case01.EstUneBombe()) 					#A conserver si on veut comparer avec une autre valeur dans le future
@@ -109,14 +108,14 @@ class testCase(unittest.TestCase):
 
 	#def testANbrBombesVoisins(self):
 
-	
+		
 
 # Executer le scripte de test non verbeux ; permet l"execution de unittest sans devoir le précisier dans la commande
 #if __name__ == '__main__': 
 #unittest.main()
 
 #Executer le scripte de test de manière verbeuse
-	
+
 suite = unittest.TestLoader().loadTestsFromTestCase(testCase)
 unittest.TextTestRunner(verbosity=2).run(suite)
 #0 (quiet): you just get the total numbers of tests executed and the global result

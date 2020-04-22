@@ -18,14 +18,15 @@ procédure de test :
 - test de fonction qui retourne une valeur (ex EstUneBombe) : - définir une valeur - assertTrue ou assertFalse de la fonction.
 """
 
-
+#test d'accès au fichier	
+print("\naccesTo test_Plateau.py (__main__.gauche) ... ok")
 
 
 from Case import Case
 from plateau import plateau
 import random
 import unittest
-class testPlateau(unittest.TestPlateau):
+class testPlateau(unittest.TestCase):
 	def setUp(self):
 		self.plateau01 = plateau()
 	
