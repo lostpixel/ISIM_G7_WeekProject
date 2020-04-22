@@ -1,4 +1,5 @@
 """
+###################### COMMENTAIRE A REFAIRE ###################################
 +++++ Composition +++++
 - print de test confirmation d'accès
 - importation
@@ -40,14 +41,15 @@ class testCase(unittest.TestCase):
 #		self.assertEqual(False,self.case01.visible)
 #		self.assertEqual(0,self.case01.bomsVois)
 	def testDevenirBombe(self):												#action de la fonction à tester: fait passer case.mine à true (bool)	
-		varTest = [True,False,-1,0,0.1,1,'a','A','?','.','/','§','-0b100101']
+		varTest = [None,True,False,-1,0,0.1,1,'a','A','?','.','/','§','-0b100101']
+		print("\n")
 		for i in range(0,len(varTest)):
 			self.case01.mine = varTest[i]
-			#print("la valeur de mine avant F = " + str(self.case01.mine))
+			print("la valeur de mine avant F = " + str(self.case01.mine))
 			#self.assertIsInstance(self.case01.mine,bool)
 			#self.case01.mine = False
 			self.case01.DevenirBombe()
-			#print("la valeur de mine après F = " + str(self.case01.mine))
+			print("la valeur de mine après F = " + str(self.case01.mine))
 			#self.assertEqual(True,self.case01.mine)
 			self.assertTrue(self.case01.mine)
 		#self.case01.mine = False
