@@ -1,15 +1,21 @@
 """
-+++++ Composition +++++
+===================================TEST INTERNE===================================
+test interne =  soft test | test externe = hard test
+
++++++ Table des partie +++++
+
 - print de test confirmation d'accès
 - importation
 - fonctions de test 
 - variable de verbosité à l'execution
+
 +++++ Fonction de test de Case ++++
+
 procédure de test : 
-a) importer la classe a tester et unittest.
-b) définir le "set up" : création de l'objet sur le quel on va tester les fonctions de test.
-c) test de fonction qui modifie la valeur (ex DevenirBombe): - définir mauvaise valeur - executer la fonction - assertEqual de la bonne valeur.
-d) test de fonction qui retourne une valeur (ex EstUneBombe) : - définir une valeur - assertTrue ou assertFalse de la fonction.
+- importer la classe a tester et unittest.
+- définir le "set up" : création de l'objet sur le quel on va tester les fonctions de test.
+- test de fonction qui modifie la valeur (ex DevenirBombe): - définir mauvaise valeur - executer la fonction - assertEqual de la bonne valeur.
+- test de fonction qui retourne une valeur (ex EstUneBombe) : - définir une valeur - assertTrue ou assertFalse de la fonction.
 """
 
 
@@ -42,7 +48,6 @@ class testCase(unittest.TestCase):
 		self.assertIsInstance(self.case01.mine,bool)
 		self.case01.mine = False
 		self.case01.DevenirBombe()
-		#self.assertEqual(True,self.case01.mine)
 		self.assertTrue(self.case01.mine)
 
 	def testEstUneBombe(self): 												#action de la fonction à tester: retourne l'état de case.mine
