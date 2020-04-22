@@ -67,4 +67,4 @@ class Case():
 		
 	def ANbrBombesVoisins(self):
 		return self.bomsVois
-print("Acces to case OK")
+print("accesTo Case.py (__main__.droite)... ok \n")

@@ -1,11 +1,20 @@
 """
-++++Fonction de test de Case ++++
++++++ Composition +++++
+- print de test confirmation d'accès
+- importation
+- fonctions de test 
+- variable de verbosité à l'execution
++++++ Fonction de test de Case ++++
 procédure de test : 
-0) importer la classe a tester et unittest.
-1) définir le "set up" : création de l'objet sur le quel on va tester les fonctions de test.
-2) test de la fonction : - définir mauvaise valeur - executer la fonction - assertEqual de la bonne valeur.
+a) importer la classe a tester et unittest.
+b) définir le "set up" : création de l'objet sur le quel on va tester les fonctions de test.
+c) test de fonction qui modifie la valeur (ex DevenirBombe): - définir mauvaise valeur - executer la fonction - assertEqual de la bonne valeur.
+d) test de fonction qui retourne une valeur (ex EstUneBombe) : - définir une valeur - assertTrue ou assertFalse de la fonction.
 """
 
+
+#test d'accès au fichier	
+print("\naccesTo test_Case.py (__main__.gauche) ... ok")
 
 
 from Case import Case			#0
@@ -29,53 +38,86 @@ class testCase(unittest.TestCase):
 #		self.assertEqual(False,self.case01.visible)
 #		self.assertEqual(0,self.case01.bomsVois)
 
-	def testDevenirBombe(self):	#2
+	def testDevenirBombe(self):												#action de la fonction à tester: fait passer case.mine à true
+		self.assertIsInstance(self.case01.mine,bool)
 		self.case01.mine = False
 		self.case01.DevenirBombe()
-		self.assertEqual(True,self.case01.mine)
+		#self.assertEqual(True,self.case01.mine)
+		self.assertTrue(self.case01.mine)
 
-	def testEstUneBombe(self):
+	def testEstUneBombe(self): 												#action de la fonction à tester: retourne l'état de case.mine
 		self.case01.mine = True
-		self.assertEqual(True,self.case01.EstUneBombe())
+		#self.assertEqual(True,self.case01.EstUneBombe()) 					#A conserver si on veut comparer avec une autre valeur dans le future
+		self.assertTrue(self.case01.EstUneBombe())
 		self.case01.mine = False
-		self.assertEqual(False,self.case01.EstUneBombe())		
+		#self.assertEqual(False,self.case01.EstUneBombe())
+		self.assertFalse(self.case01.EstUneBombe())
 
-	def testRendreVisible(self):	#2
+	def testRendreVisible(self):											#action de la fonction à tester: retourne l'état de case.visible
+		self.assertIsInstance(self.case01.visible,bool)
 		self.case01.visible = False
 		self.case01.RendreVisible()
 		self.assertEqual(True,self.case01.visible)
 
-	def testEstVisible (self):
+	def testEstVisible (self):												#action de la fonction à tester: retourne l'état de case.visible
+		self.assertIsInstance(self.case01.visible,bool)
 		self.case01.visible = True
-		self.assertEqual(True,self.case01.EstVisible())
+		#self.assertEqual(True,self.case01.EstVisible())
+		self.assertTrue(self.case01.EstVisible())
 		self.case01.visible = False
-		self.assertEqual(False,self.case01.EstVisible())		
+		#self.assertEqual(False,self.case01.EstVisible())
+		self.assertFalse(self.case01.EstVisible())
 
-	def testChangeDrapeau(self):	#2
-		self.case01.drapeau = False
-		self.case01.ChangeDrapeau()
-		self.assertEqual(True,self.case01.drapeau)
-
-	def testEstDrapeau(self):	
+	def testChangeDrapeau(self):											#action de la fonction à tester: faiter passer case.drapeau à sa valeur opposée
+		self.assertIsInstance(self.case01.drapeau,bool)
 		self.case01.drapeau = True
-		self.assertEqual(True,self.case01.EstDrapeau())
+		self.case01.ChangeDrapeau()
+		#self.assertEqual(True,self.case01.drapeau) 
+		self.assertFalse(self.case01.drapeau)
+		#print("valeur de drapeau 1 = "+ str(self.case01.drapeau)) 			# test de test :p
+		
+		self.case01.drapeau=False
+		#print("valeur de drapeau 2 = "+ str(self.case01.drapeau)) 			# test de test :p
+		#self.assertIsInstance(self.case01.drapeau,bool) 					# redondant
+		self.case01.ChangeDrapeau()
+		#print("valeur de drapeau 3 = "+ str(self.case01.drapeau)) 			# test de test :p
+		#self.assertEqual(False,self.case01.drapeau)
+		self.assertTrue(self.case01.drapeau)
+		
+	def testEstDrapeau(self):												#action de la fonction à tester: retourne la valeur de case.drapeau
+		self.assertIsInstance(self.case01.visible,bool)
+		self.case01.drapeau = True
+		#self.assertEqual(True,self.case01.EstDrapeau())
+		self.assertTrue(self.case01.EstDrapeau())
 		self.case01.drapeau = False
-		self.assertEqual(False,self.case01.EstDrapeau())	
+		#self.assertEqual(False,self.case01.EstDrapeau())
+		self.assertFalse(self.case01.EstDrapeau())
 
-	def testAvoirMineVoisine(self):	#2
+	def testAvoirMineVoisine(self):											#action de la fonction à tester: retourne le nombre de mine autour de la case
+		self.assertIsInstance(self.case01.bomsVois,int)	
+		#print("valeur de bomsVois = "+ str(self.case01.bomsVois)) 		
 		self.case01.bomsVois = 0
+		self.assertTrue(0 <= self.case01.bomsVois <= 9)
 		self.case01.AvoirMineVoisine()
 		self.assertEqual(1,self.case01.bomsVois)
+	
+
+	#def testANbrBombesVoisins(self):
 
 	
 
-#Executer le scripte de test non verbeux ; permet l"execution de unittest sans devoir le précisier dans la commande
+# Executer le scripte de test non verbeux ; permet l"execution de unittest sans devoir le précisier dans la commande
 #if __name__ == '__main__': 
 #unittest.main()
 
 #Executer le scripte de test de manière verbeuse
-suite = unittest.TestLoader().loadTestsFromTestCase(testCase)
-unittest.main(verbosity=2).run(suite)
 	
-#test d'accès au fichier	
-print("Acces to test_Case OK")
+suite = unittest.TestLoader().loadTestsFromTestCase(testCase)
+unittest.TextTestRunner(verbosity=2).run(suite)
+#0 (quiet): you just get the total numbers of tests executed and the global result
+#1 (default): you get the same plus a dot for every successful test or a F for every failure
+#2 (verbose): you get the help string of every test and the result
+
+
+	
+
