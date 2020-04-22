@@ -1,6 +1,6 @@
 """
-===================================TEST INTERNE===================================
-test interne =  soft test | test externe = hard test
+===================================TEST ===================================
+-> En privé donc pas de test possible
 
 +++++ Table des partie +++++
 
@@ -9,45 +9,46 @@ test interne =  soft test | test externe = hard test
 - fonctions de test 
 - variable de verbosité à l'execution
 
-+++++ Fonction de test de Case ++++
++++++ Fonction de test de Case +++++
 
 procédure de test : 
 - importer la classe a tester et unittest.
 - définir le "set up" : création de l'objet sur le quel on va tester les fonctions de test.
 - test de fonction qui modifie la valeur (ex DevenirBombe): - définir mauvaise valeur - executer la fonction - assertEqual de la bonne valeur.
 - test de fonction qui retourne une valeur (ex EstUneBombe) : - définir une valeur - assertTrue ou assertFalse de la fonction.
+
+A faire si case.py redevient publique : 
+- commenter ligne 30 : print("\n Private method don't you dare to grobe, you'r pervert !")
+- décommenter ligne 31 : import unittest
+- décommenter les """ """ de la classe testCase
+- décommenter ligne 122 #suite = unittest.TestLoader().loadTestsFromTestCase(testCase)
+- décommenter ligne 123 #unittest.TextTestRunner(verbosity=2).run(suite)
 """
 
 
 #test d'accès au fichier	
 print("\naccesTo test_Case.py (__main__.gauche) ... ok")
-SomeCoolException : " private access, don't grope it u perv !"
 
 from Case import Case			#0
-import unittest	#0
+print("\n Private method don't you dare to grobe, you'r pervert !")
+#import unittest	
+
+"""
 
 class testCase(unittest.TestCase):
-	SomeCoolException : " private access, don't grope it u perv !"
-
 
 	def setUp(self):			#1
 		self.case01 = Case()	#1
 	
-#	try :
-#	except ValueError:
-#		print("private acces")
 
 	def testDevenirBombe(self):												#action de la fonction à tester: fait passer case.mine à true
 		#SomeCoolException : " private access, don't grope it u perv !"
 		#self.assertRaises(SomeCoolException, self.assertIsInstance(self.case01.mine,bool))
-		try : 
-			self.assertIsInstance(self.case01.mine,bool)
-		except :
-			print(" private access, don't grope it u perv !")
+		self.assertIsInstance(self.case01.mine,bool)
 		self.case01.mine = False
 		self.case01.DevenirBombe()
 		#self.assertRaises("SomeCoolException", self.assertTrue(self.case01.mine))			
-		#self.assertTrue('private access, don\'t grope it u perv !' in self.case01.mine)
+		self.assertTrue(self.case01.mine)
 	
 	def testEstUneBombe(self): 												#action de la fonction à tester: retourne l'état de case.mine
 		self.case01.mine = True
@@ -97,7 +98,7 @@ class testCase(unittest.TestCase):
 		#self.assertEqual(False,self.case01.EstDrapeau())
 		self.assertFalse(self.case01.EstDrapeau())
 
-	def testAvoirMineVoisine(self):											#action de la fonction à tester: retourne le nombre de mine autour de la case
+	def testAvoirMineVoisine(self):											#action de la fonction à tester: ajoute un au nombre de mine voisines
 		self.assertIsInstance(self.case01.bomsVois,int)	
 		#print("valeur de bomsVois = "+ str(self.case01.bomsVois)) 		
 		self.case01.bomsVois = 0
@@ -106,9 +107,12 @@ class testCase(unittest.TestCase):
 		self.assertEqual(1,self.case01.bomsVois)
 	
 
-	#def testANbrBombesVoisins(self):
+	def testANbrBombesVoisins(self):										#action de la fonction à tester: retourne le nombre de mine autour de la case
+	self.assertIsInstance(self.case01.bomsVois,int)
+	self.case01.bomsVois = 0
+	self.assertEqual(0,self.case01.AvoirMineVoisine())
+"""
 
-		
 
 # Executer le scripte de test non verbeux ; permet l"execution de unittest sans devoir le précisier dans la commande
 #if __name__ == '__main__': 
@@ -116,8 +120,9 @@ class testCase(unittest.TestCase):
 
 #Executer le scripte de test de manière verbeuse
 
-suite = unittest.TestLoader().loadTestsFromTestCase(testCase)
-unittest.TextTestRunner(verbosity=2).run(suite)
+#suite = unittest.TestLoader().loadTestsFromTestCase(testCase)
+#unittest.TextTestRunner(verbosity=2).run(suite)
+
 #0 (quiet): you just get the total numbers of tests executed and the global result
 #1 (default): you get the same plus a dot for every successful test or a F for every failure
 #2 (verbose): you get the help string of every test and the result
