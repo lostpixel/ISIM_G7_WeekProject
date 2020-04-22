@@ -1,15 +1,15 @@
-from Plateau import Plateau
+from Plateau import *
 
 class Jeu():
 
 	def __init__(self):
-		self.plateau = Plateau(0, 9, 9, 10)
+		self.plateau = PlateauPropagation(9, 9, 10)
 		self.creuse = True
 		
 	def Run(self):
 		prompt = "[c : creuser, d : drapeau, q : quitter]\n{0} > "
 		
-		while not self.plateau.gameOver:
+		while not self.plateau.Perdre():
 			self.plateau.AfficherTableau()
 			entree = input(prompt.format('Creuser' if self.creuse else 'Drapeau'))
 			self.parse_input(entree.strip().lower())
@@ -33,6 +33,7 @@ class Jeu():
 		L, C = [int(num) for num in in_str.split()]
 		if self.creuse:
 			self.plateau.CreuserCase(L-1, C-1)
+			self.plateau.JouerCoup()
 		else:
 			self.plateau.Draper(L-1, C-1)
 			
