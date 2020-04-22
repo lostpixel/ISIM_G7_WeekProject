@@ -29,42 +29,32 @@ class Case():
 	def __init__(self):
 		#Initialisation de la case. Par défaut :
 		
-		self.mine = 0				#Une case n'a pas de mine.
-		self.drapeau = False 		#Une case n'a pas de drapeau.
-		self.visible = False		#Son contenu n'est pas visible
-		self.bomsVois = 0			#Elle n'a pas de bombes dans son voisinnage
-	
-	def RetourCase(self):
-		#Retourne un caractère symboliasant l'état de la cas. Affichage Test
-		if self.visible: #Si la case est découverte
-			if self.mine > 0: #Si elle a une mine
-				return 'M'
-			else: #Si elle n'a pas de mine
-				return str(self.bomsVois) if self.bomsVois else ' ' #On retoune le nombre de bombes voisines si elle en a
-		else :
-			return 'D' if self.drapeau else 'X' #On affiche le drapeau si elle en a un.
+		self.__mine = 0				#Une case n'a pas de mine.
+		self.__drapeau = False 		#Une case n'a pas de drapeau.
+		self.__visible = False		#Son contenu n'est pas visible
+		self.__bomsVois = 0			#Elle n'a pas de bombes dans son voisinnage
 			
 	def DevenirBombe(self, level): #La case devient piègée
-		self.mine = level
+		self.__mine = level
 		
 	def EstUneBombe(self):
-		return self.mine
+		return self.__mine
 	
 	def RendreVisible(self): #La case est découverte
-		self.visible = True
+		self.__visible = True
 		
 	def EstVisible(self):
-		return self.visible
+		return self.__visible
 		
 	def ChangeDrapeau(self): #On pose ou on retire un drapeau
-		self.drapeau = not self.drapeau
+		self.__drapeau = not self.__drapeau
 	
 	def EstDrapeau(self):
-		return self.drapeau
+		return self.__drapeau
 	
 	def AvoirMineVoisine(self): #La case a une mine parmi ses voisins
-		self.bomsVois += 1 #On augment le nombre de ses voisins de 1
+		self.__bomsVois += 1 #On augment le nombre de ses voisins de 1
 		
 	def ANbrBombesVoisins(self):
-		return self.bomsVois
+		return self.__bomsVois
 			
