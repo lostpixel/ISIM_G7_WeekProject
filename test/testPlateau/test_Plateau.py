@@ -1,7 +1,5 @@
 """
-===================================TEST INTERNE===================================
-test interne =  soft test / test de fonctionalité | test externe = hard test / test de posibilitées
-
+===================================TEST===================================
 +++++ Table des partie +++++
 
 - print de test confirmation d'accès
@@ -9,7 +7,7 @@ test interne =  soft test / test de fonctionalité | test externe = hard test / 
 - fonctions de test 
 - variable de verbosité à l'execution
 
-+++++ Fonction de test de Case ++++
++++++ Fonction de test de Plateau +++++
 
 procédure de test : 
 - importer la classe a tester et unittest.
