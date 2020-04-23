@@ -18,10 +18,11 @@ liste appel d'autre fonction :
 	- PlacerMines
 		- SignalerMineAuxVoisins
 """
+from abc import ABC
 from Case import Case
 import random
 
-class Plateau():
+class PlateauTemplate(ABC):
 	#Plateau du Démineur
 	
 	"""Attributs :
@@ -34,59 +35,52 @@ class Plateau():
 	- gameOver			-> Bool : Indique la fin de partie. True = Partie Perdue
 	"""
 	
-	def __init__(self, type_partie, hauteur, largeur, nbr_mines):
+	def __init__(self, hauteur, largeur, nbr_mines):
 		#Initialisation du plateau
 		
-		self.hauteur = hauteur
-		self.largeur = largeur
-		self.nbr_Mines = 0 #Nombre de drapeau sur la grille
-		self.nbr_drapeau = 0 #Nombre de mines sur la grille
-		self.nbr_Cases_Caches = hauteur * largeur
-		self.gameOver = False
-		self.cases = []
+		self._hauteur = hauteur
+		self._largeur = largeur
+		self._nbrMines = 0 #Nombre de drapeau sur la grille
+		self._nbrDrapeaux = 0 #Nombre de mines sur la grille
+		self._nbrCoups = 0
+		self._nbrCasesCachees = hauteur * largeur
+		self._gameOver = False
+		self._cases = []
 		
 		self.remplirCases() #Initialisation du plateau
-		self.determinerMines(type_partie, nbr_mines)
+		self.PlacerMines(nbr_mines)
 		
 	def remplirCases(self):
 		#Remplit le plateau de cases initialisée
 		
-		self.cases = [Case() for x in range(self.hauteur * self.largeur)]
+		self._cases = [Case() for x in range(self._hauteur * self._largeur)]
 		
 	def determinerMines(self, type_partie, nbr_mines):
-		LETHAL = 1
-		PROPA = 2
-		TIMER = 3
-		COUP = 4
-		
-		if (type_partie < 2):
-			self.placerMines(nbr_mines, 1)
-		else:
 			nbr_spcl_mines = nbr_mines // 5
-			self.placerMines(nbr_mines - 3*nbr_spcl_mines, 1)
-			self.placerMines(nbr_spcl_mines, 2)
-			self.placerMines(nbr_spcl_mines, 3)
-			self.placerMines(nbr_spcl_mines, 4)
+			self.PlacerMines(nbr_mines - 3*nbr_spcl_mines, 1)
+			self.PlacerMines(nbr_spcl_mines, 2)
+			self.PlacerMines(nbr_spcl_mines, 3)
+			self.PlacerMines(nbr_spcl_mines, 4)
 
-	def placerMines(self, nbr_mines, type):
+	def PlacerMines(self, nbr_mines):
 		#Place les mines aléatoirement dans le plateau
 		
 		for x in range(nbr_mines):
-			caseIndex = random.randint(0, self.hauteur * self.largeur - 1) #On choisit aléatoirement une case du plateau
-			while self.cases[caseIndex].mine :  #Tant que la case choisi à déjà une bombe...
-				caseIndex = random.randint(0, self.hauteur * self.largeur - 1) #On recommence
-			ligne = caseIndex // self.largeur
+			caseIndex = random.randint(0, self._hauteur * self._largeur - 1) #On choisit aléatoirement une case du plateau
+			while self._cases[caseIndex].EstUneBombe() or self._cases[caseIndex].EstVisible() :  #Tant que la case choisi à déjà une bombe...
+				caseIndex = random.randint(0, self._hauteur * self._largeur - 1) #On recommence
+			ligne = caseIndex // self._largeur
 			"""
 			La ligne de la case est obtenue en divisant l'index de la case par la largeur du plateau, 
 			soit le nombre de colonnes
 			"""
-			colonne = caseIndex % self.largeur
+			colonne = caseIndex % self._largeur
 			"""
 			La colonne est donc le reste de la division ci-dessus
 			"""
-			self.cases[caseIndex].DevenirBombe(type) #La Case devient une bombe
+			self._cases[caseIndex].DevenirBombe(1) #La Case devient une bombe
 			self.SignalerMineAuxVoisins(ligne, colonne)
-			self.nbr_Mines +=1
+			self._nbrMines +=1
 			
 	def SignalerMineAuxVoisins(self, ligne, colonne):
 		"""
@@ -108,13 +102,19 @@ class Plateau():
 				- L-1 à L+1
 				- C-1 à C+1
 		"""
-		for L in range(max(0,ligne-1), min(ligne+2, self.hauteur)):
-			for C in range(max(0,colonne-1), min(colonne+2, self.largeur)):
-				self.cases[L * self.largeur + C].AvoirMineVoisine() #On signale à la case qu'elle a une mine parmi ses voisins
+		for L in range(max(0,ligne-1), min(ligne+2, self._hauteur)):
+			for C in range(max(0,colonne-1), min(colonne+2, self._largeur)):
+				self._cases[L * self._largeur + C].AvoirMineVoisine() #On signale à la case qu'elle a une mine parmi ses voisins
 	
 	def Gagner(self):
 		#Verifie que le nombre de case cachées est égale au nombre de mine
-		return self.nbr_Cases_Caches == self.nbr_Mines
+		return self._nbrCasesCachees == self._nbrMines
+		
+	def Perdre(self):
+		return self._gameOver
+		
+	def JouerCoup(self):
+		self._nbrCoups += 1
 	
 	def Draper(self, ligne, colonne):
 		
@@ -124,19 +124,19 @@ class Plateau():
 		
 		
 		#On récupère l'index de la case
-		case = self.cases[ligne * self.largeur + colonne]
+		case = self._cases[ligne * self._largeur + colonne]
 		if not case.EstVisible(): #Si la case n'est pas visible
 			case.ChangeDrapeau() #On change l'état Drapeau
 			if case.EstDrapeau():
-				self.nbr_drapeau +=1
+				self._nbrDrapeaux +=1
 			else:
-				self.nbr_drapeau -=1
+				self._nbrDrapeaux -=1
 				
 	def CreuserCase(self, ligne, colonne):
 		#Creuse la case à la position (ligne, colonne)
 		
 		#On récupère l'index de la case
-		case = self.cases[ligne * self.largeur + colonne]
+		case = self._cases[ligne * self._largeur + colonne]
 		
 		#Si la case est visible ou a un drapeau, on ne fait rien
 		if case.EstVisible() or case.EstDrapeau():
@@ -144,31 +144,52 @@ class Plateau():
 		#Sinon, on rend visible le contenu et on diminue le nombre de cases cachées
 		else:
 			case.RendreVisible()
-			self.nbr_Cases_Caches -=1
+			self._nbrCasesCachees -=1
 			
 			#Si la case est minée, la partie est perdue
 			#Donc, si EstBombe est différent de 0
 			if (case.EstUneBombe() > 0):
-				self.gameOver = True
+				self._gameOver = True
 			
 			#Si la case n'a aucune bombe dans parmi ses voisins
 			if (case.ANbrBombesVoisins() == 0):
 				#On parcout ses voisins
-				for L in range(max(0,ligne-1), min(ligne+2, self.hauteur)):
-					for C in range(max(0,colonne-1), min(colonne+2, self.largeur)):
+				for L in range(max(0,ligne-1), min(ligne+2, self._hauteur)):
+					for C in range(max(0,colonne-1), min(colonne+2, self._largeur)):
 						#Et on les joue
 						self.CreuserCase(L, C)
 			#On finit par vérifier si la partie est gagnée
-			self.gameOver = self.Gagner()
+			self._gameOver = self.Gagner()
+			
+	def DessinerTableau(self):
+		offsetY = 0
+		for Y in self._hauteur:
+			offsetX = 0
+			for X in self._largeur:
+				case = self._cases[Y * self._largeur + X]
+				#case.Dessiner(X + offsetX, Y + offsetY, self.__Taille, self.__Taille)
+				offsetX += self.__Taille
+			offsetY += self.__Taille
+				
+	def EstPosition(self, PosX, PosY):
+		offsetY = 0
+		for Y in self._hauteur:
+			offsetX = 0
+			for X in self._largeur:
+				if (X + offsetX <= PosX and PosX <= X + offsetX and Y + offsetY <= PosY and PosY <= Y + offsetY):
+					return Y, X
+				offsetX += self.__Taille
+			offsetY += self.__Taille
+	
 	
 	def AfficherTableau(self):
 		#Retourne la grille sous forme de string, Affichage Test
 		
-		for L in range(self.hauteur):
+		for L in range(self._hauteur):
 			print(" ", end='')
-			for C in range(self.largeur) :
-				case = self.cases[L * self.largeur + C]
-				if self.gameOver and case.EstUneBombe():
+			for C in range(self._largeur) :
+				case = self._cases[L * self._largeur + C]
+				if self._gameOver and case.EstUneBombe():
 					print("M ", end ='')
 				elif not case.EstVisible():
 					if case.EstDrapeau():
@@ -179,4 +200,92 @@ class Plateau():
 					print("%d " % (case.ANbrBombesVoisins()), end ='')	
 			print ()
 		print()
+		print("Mines restantes = %d" % (self._nbrMines-self._nbrDrapeaux))
+		print("Coups =  %d" % (self._nbrCoups))
 		print()
+		
+class PlateauNormal(PlateauTemplate):
+	
+	def __init__(self, hauteur, largeur, nbr_mines):
+		PlateauTemplate.__init__(self, hauteur, largeur, nbr_mines)
+
+class PlateauPropagation(PlateauTemplate):
+
+	def __init__(self, hauteur, largeur, nbr_mines):
+		PlateauTemplate.__init__(self, hauteur, largeur, nbr_mines)
+		
+	
+
+	def CreuserCase(self, ligne, colonne):
+		PlateauTemplate.CreuserCase(self, ligne, colonne)
+		_ = self._nbrCoups % 3
+		if _ == 0 :
+			nbrCasesLibres = self._nbrCasesCachees - self._nbrMines
+			self.PlacerMines(nbrCasesLibres // 15)
+			
+class PlateauApocalypse(PlateauTemplate): 
+
+	def __init__(self, hauteur, largeur, nbr_mines):
+		PlateauTemplate.__init__(self, hauteur, largeur, nbr_mines)
+
+	def PlacerMines(self, nbr_mines):
+		nbr_spcl_mines = nbr_mines // 5
+		self.PlacerSuperMines(nbr_mines - 3*nbr_spcl_mines, 1)
+		self.PlacerSuperMines(nbr_spcl_mines, 2)
+		self.PlacerSuperMines(nbr_spcl_mines, 3)
+		self.PlacerSuperMines(nbr_spcl_mines, 4)
+			
+	def PlacerSuperMines(self, nbr_mines, type):
+		for x in range(nbr_mines):
+			caseIndex = random.randint(0, self._hauteur * self._largeur - 1) #On choisit aléatoirement une case du plateau
+			while self._cases[caseIndex].EstUneBombe() or self._cases[caseIndex].EstVisible() :  #Tant que la case choisi à déjà une bombe...
+				caseIndex = random.randint(0, self._hauteur * self._largeur - 1) #On recommence
+			ligne = caseIndex // self._largeur
+			"""
+			La ligne de la case est obtenue en divisant l'index de la case par la largeur du plateau, 
+			soit le nombre de colonnes
+			"""
+			colonne = caseIndex % self._largeur
+			"""
+			La colonne est donc le reste de la division ci-dessus
+			"""
+			self._cases[caseIndex].DevenirBombe(type) #La Case devient une bombe
+			self.SignalerMineAuxVoisins(ligne, colonne)
+			self._nbrMines +=1
+			
+	def CreuserCase(self, ligne, colonne):
+		#Creuse la case à la position (ligne, colonne)
+		
+		#On récupère l'index de la case
+		case = self._cases[ligne * self._largeur + colonne]
+		
+		#Si la case est visible ou a un drapeau, on ne fait rien
+		if case.EstVisible() or case.EstDrapeau():
+			return
+		#Sinon, on rend visible le contenu et on diminue le nombre de cases cachées
+		else:
+			case.RendreVisible()
+			self._nbrCasesCachees -=1
+			
+			#Si la case est minée, la partie est perdue
+			#Donc, si EstBombe est différent de 0
+			if (case.EstUneBombe() > 0):
+				if (case.EstUneBombe() == 1):
+					self._gameOver = True
+				if (case.EstUneBombe() == 2):
+					for X in range(1, 5):
+						self.PlacerSuperMines(1, X)
+				if (case.EstUneBombe() == 3):
+					print("+ 10 secondes")
+				if (case.EstUneBombe() == 4):
+					self._nbrCoups += 5
+				
+			#Si la case n'a aucune bombe dans parmi ses voisins
+			if (case.ANbrBombesVoisins() == 0):
+				#On parcout ses voisins
+				for L in range(max(0,ligne-1), min(ligne+2, self._hauteur)):
+					for C in range(max(0,colonne-1), min(colonne+2, self._largeur)):
+						#Et on les joue
+						self.CreuserCase(L, C)
+			#On finit par vérifier si la partie est gagnée
+			self._gameOver = self.Gagner()

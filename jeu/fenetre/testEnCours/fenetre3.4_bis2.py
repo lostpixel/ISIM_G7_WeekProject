@@ -183,7 +183,8 @@ class appTK:
 			if val == True :
 				maFenetre.quit()
 			else : pass
-			
+		
+		
 		#bouton quitter : fermeture (détruire la fenetre)
 		btn_quitter=Button(frame_bouton, width=20, text="Quitter", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan",command=quitter)
 		btn_quitter.pack(padx=5, pady=5)
@@ -192,7 +193,7 @@ class appTK:
 		frame_general.pack(side=LEFT, padx=5, pady=5)   #fermeture du frame général
 
 		# canvas TKinter
-		BG = PhotoImage(file=PATH+"bg.png")
+		BG = PhotoImage(file=PATH+"\\bg.png")
 		canvasBG = Canvas(maFenetre)
 		canvasBG.create_image(0, 0, anchor=NW, image=BG)
 		canvasBG.pack(side=AUTO,padx=10,pady=10)
@@ -216,7 +217,7 @@ class appTK:
 
 		frame_timers.pack()
 		default_timer()
-		updateTime()   
+		updateTime()
 		
 
 		"++++ FIN DE LA CLASSE ++++"
