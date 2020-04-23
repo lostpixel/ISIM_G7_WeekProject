@@ -1,9 +1,9 @@
 """
 ===================================TEST ===================================
--> En privé donc pas de test possible
+-> Variables en privé donc pas de test possible
 
 +++++ Table des partie +++++
-
+- print message varables privé
 - print de test confirmation d'accès
 - importation
 - fonctions de test 
