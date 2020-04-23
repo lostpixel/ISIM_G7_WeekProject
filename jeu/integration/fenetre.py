@@ -1,5 +1,7 @@
 """
 ================================================CLASS FENETRE  =========================
+VERSON 3.6.3
+
 ++++++++++++ STRUCURE DU FICHIER ++++++++++++++++++++++++
 - IMPORTATION
 - DECLARTION VARIABLE (PATH)
@@ -25,17 +27,155 @@ grid in pack LEFT
 canvas in pack RIGHT
 """
 
+b = [] 
+labels = []
+
 # IMPORTATION
 import os
 from tkinter import *
 from tkinter import ttk
 from timeit import default_timer
 from tkinter import messagebox
+from Plateau import *
 PATH = os.path.dirname(os.path.realpath('__file__'))
+
+
+		# def create_plateau():
+			# plateau = PlateauNormal(9,9,10) #hauteur  - latrgeur - Nb Mine
+			# canvasBG.delete("all")
+			
+			# for ligne in range(plateau._hauteur):
+				# for colonne in range(plateau._largeur):
+					# Button(maFenetre,text='TEST', borderwidth=1).grid(row=ligne, column=colonne)
+
+
+def ClicSourie(event):
+    Clic = event.keysym
+    print(touche)	
+
+
+
+def create_plateau():
+	fen=Toplevel()
+	#fen.title("Plateau de jeu")
+	fen.configure(bg="#151515")
+	fen.resizable(width=False, height=False)
+		
+	#Permet un affichage centré sur l'écran
+	screen_x=int(fen.winfo_screenwidth())
+	screen_y=int(fen.winfo_screenheight())
+	window_x=500
+	window_y=400
+	posX=(screen_x // 2) - (window_x // 2)
+	posY=(screen_y // 2) - (window_y // 2)
+	geo="{}x{}+{}+{}".format(window_x, window_y, posX, posY)
+	fen.geometry(geo)
+	 
+	btn_fermer=Button(fen, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=fen.destroy)
+	btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
+
+	
+	# drapeau = PhotoImage(file = PATH+r'\.png')
+	# bombeA = PhotoImage(file = PATH+r'\.png')
+	# bombeB = PhotoImage(file = PATH+r'\.png')
+	# bombeC = PhotoImage(file = PATH+r'\.png')
+	# bombeD = PhotoImage(file = PATH+r'\.png')
+
+	# canvas = Canvas(fen, width=500, height=400)
+	# canvas.focus_set()
+	# canvas.bind("<Button-1>", ClicSourie)
+	# canvas.pack()
+
+
+
+
+	
+	plateau = PlateauNormal(9,9,10) #hauteur  - latrgeur - Nb Mine
+	canvasPlateau = Canvas (fen, width=780, height=800, bg="#151515" )
+	canvasPlateau.pack(padx=50,pady=50)
+	index=0 
+	labels
+	for ligne in range(plateau._hauteur):
+		for colonne in range(plateau._largeur):
+#            labels.append(Label(can, text=v,bd=1,justify=CENTER,relief=SUNKEN,font=("Helvetica", 9),image="",width=1,height=1,padx=9,pady=5))
+#            labels[a].grid(column=i,row=j)			
+			if plateau._gameOver and plateau._cases[index].EstUneBombe() > 0 :
+				contenu = 'M'
+				print("M")
+			elif not plateau._cases[index].EstVisible() :
+				if plateau._cases[index].EstDrapeau() > 0 :
+					contenu = 'D'
+					print("D")
+				else : 
+					contenu = 'X' 
+					print("X")
+			else : contenu = "%d " % (plateau._cases[index].ANbrBombesVoisins())
+			
+			labels.append(Label(canvasPlateau, text=contenu,bd=1,justify=CENTER,relief=SUNKEN,font=("Helvetica", 9),image="",width=1,height=1,padx=9,pady=5))
+			labels[index].grid(column=colonne,row=ligne)
+			
+			b.append(Button(canvasPlateau,text='X',image="",padx=8,pady=1)) 
+			b[index].grid(column=colonne,row=ligne)
+			#b[a].bind("<Button-3>",lambda i,ref=a: afficheFlag(ref))
+			# b[a].bind("<Button-1>",lambda i,ref=a: click(ref))
+			#b[index].bind("<Button-1>",lambda i,ref=a: plateau.CreuserCase(index))
+			
+			b[index].bind("<Button-1>",lambda ligne,ref=index: plateau.CreuserCase(ref))
+			
+			b[index].config(relief=RAISED)
+			index+=1
+	
+	
+	
+	
+	# for ligne in range(plateau._hauteur):
+		# for colonne in range(plateau._largeur):
+			# index = (ligne * plateau._largeur + colonne)
+			# contenu = ""
+			
+			# if plateau._gameOver and plateau._cases[index].EstUneBombe() > 0 :
+				# contenu = 'M'
+			# elif not plateau._cases[index].EstVisible() :
+				# if plateau._cases[index].EstDrapeau() > 0 :
+					# contenu = 'D'
+				# else : contenu = 'X'
+			# else : contenu = "%d " % (plateau._cases[index].ANbrBombesVoisins())
+			
+			# button[index] = Button(canvasPlateau,text=contenu, borderwidth=1).grid(row=ligne, column=colonne)
+			# button[index].configure(command = plateau.CreuserCase(ligne,colonne))
+
+	
+	
+	# def action():
+		# plateau.CreuserCase(plateau.CreuserMine(ligne,colonne))
+	
+	#btn_placerMine=Button(fen, text="placer Mine", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=plateau.PlacerMines(9))
+	#btn_placerMine.pack(side=BOTTOM, padx=10, pady=10)
+
+
+def resultat():      
+    fen=Toplevel()
+    fen.title("Sore")
+    fen.configure(bg="#151515")
+    fen.resizable(width=False, height=False)
+        
+    #Permet un affichage centré sur l'écran
+    screen_x=int(fen.winfo_screenwidth())
+    screen_y=int(fen.winfo_screenheight())
+    window_x=500
+    window_y=400
+    posX=(screen_x // 2) - (window_x // 2)
+    posY=(screen_y // 2) - (window_y // 2)
+    geo="{}x{}+{}+{}".format(window_x, window_y, posX, posY)
+    fen.geometry(geo)
+     
+    btn_fermer=Button(fen, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=fen.destroy)
+    btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
+     
 
 def regle_jeu():      
     fene=Toplevel()
-    fene.title("Comment jouer au DECORONA VISEUR")
+    fene.title("Règle du Decorona viseur")
     fene.configure(bg="#151515")
     fene.resizable(width=False, height=False)
         
@@ -49,7 +189,7 @@ def regle_jeu():
     geo="{}x{}+{}+{}".format(window_x, window_y, posX, posY)
     fene.geometry(geo)
      
-    btn_fermer=Button(fene, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=quitter)
+    btn_fermer=Button(fene, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=fene.destroy)
     btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
      
     #fonction pour ouverture de la fenêtre inscription, qui contient la possibilité d'entré ce nom
@@ -126,6 +266,7 @@ class appTK:
 			if val==True:
 				maFenetre.quit()
 			else: pass
+
 			
 				#Frame : compteurs, niveaux, boutons, timer, joueur
 
@@ -138,7 +279,7 @@ class appTK:
 		frame_joueur=LabelFrame(frame_general, text="Player", padx=5, pady=5)
 		frame_joueur.configure(bg="#151515", fg="green")
 
-		label_nom=Label(frame_joueur, width=20)
+		label_nom=Label(frame_joueur, width=20, bg="#151515", fg="white")
 		label_nom.pack()
 
 				#bouton pour introduire et enregistrer les données son nom
@@ -201,14 +342,14 @@ class appTK:
 		frame_mode=LabelFrame(frame_option, text="Mode", bg="#151515", fg="#FC8C00")
 		frame_mode.configure(bg="#151515")
 				#bouton mode classique
-		btn_classique=Button(frame_niveau, width=20, text="Classique", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_classique=Button(frame_mode, width=20, text="Classique", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
 		btn_classique.pack(padx=5, pady=5)
 				#bouton mode propagation
-		btn_propagation=Button(frame_niveau, width=20, text="Propagation", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_propagation=Button(frame_mode, width=20, text="Propagation", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
 		btn_propagation.pack(padx=5, pady=5)
 				#bouton mmode apocalypse
-		btn_apocalypse=Button(frame_niveau, width=20, text="Apocalypse", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
-		btn_apocalypse.pack(padx=2, pady=2)
+		btn_apocalypse=Button(frame_mode, width=20, text="Apocalypse", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_apocalypse.pack(padx=5, pady=5)
 
 		frame_mode.pack(side=BOTTOM, padx=2, pady=2)
 		frame_option.grid(row=3, column=0, padx=5, pady=5)
@@ -218,11 +359,11 @@ class appTK:
 		frame_bouton.configure(bg="#151515", fg="green")
 
 				#bouton nouvelle partie
-		btn_jouer=Button(frame_bouton, width=20, text="Nouvelle partie", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_jouer=Button(frame_bouton, width=20, text="Nouvelle partie", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=create_plateau)
 		btn_jouer.pack(padx=5, pady=5)        
 
 				#bouton score
-		btn_score=Button(frame_bouton, width=20, text="Résultat", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_score=Button(frame_bouton, width=20, text="Résultat", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=resultat)
 		btn_score.pack(padx=5, pady=5)
 
 				#bouton règles du jeux
@@ -239,13 +380,16 @@ class appTK:
 				# canvas : affiche l'image d'ouverture du jeu
 		BG = PhotoImage(file= PATH+r'\bg.png')
 		maFenetre.BG = BG
-		canvasBG = Canvas(maFenetre, width=780, height=780 ) # , bg="#151515"
+		canvasBG = Canvas(maFenetre, width=780, height=800 ) # , bg="#151515"
 		canvasBG.create_image(0, 0, anchor=NW, image=BG)
-		canvasBG.pack(side=RIGHT,padx=40,pady=40)
-
+		canvasBG.pack(side=RIGHT,padx=50,pady=50)
+		
 		#appel de fonction : associé au timer
 		default_timer()
 		updateTime()    
+		
+
+
 
 
 #Déclaration de la fenêtre principal

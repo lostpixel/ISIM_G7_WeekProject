@@ -18,9 +18,11 @@ liste appel d'autre fonction :
 	- PlacerMines
 		- SignalerMineAuxVoisins
 """
+
 from abc import ABC
 from Case import Case
 import random
+import fenetre
 
 class PlateauTemplate(ABC):
 	#Plateau du Démineur
@@ -79,6 +81,9 @@ class PlateauTemplate(ABC):
 			La colonne est donc le reste de la division ci-dessus
 			"""
 			self._cases[caseIndex].DevenirBombe(1) #La Case devient une bombe
+			
+			Button(fenetre, text='BOMBE', borderwidth=1).grid(row=ligne, column=colonne)
+			
 			self.SignalerMineAuxVoisins(ligne, colonne)
 			self._nbrMines +=1
 			
