@@ -13,7 +13,7 @@ liste appel d'autre fonction :
 """
 
 """
-================================================CLASS FENETRE=========================
+================================================CLASS FENETRE : TENTATIVE TOUT PACK() =========================
 ++++++++++++ STRUCURE DU FICHIER ++++++++++++++++++++++++
 - IMPORTATION
 - DECLARTION VARIABLE (PATH)
@@ -30,6 +30,10 @@ class application
 		|--->
 
 	- fonction
++++++++++++++++ STRUCTURE TKinter ++++++++++++++++++++++++++++++++
+pack LEFT - pack RIGHT
+grid in pack LEFT
+canvas in pack RIGHT
 
 """
 
@@ -188,10 +192,10 @@ class appTK:
 		frame_general.pack(side=LEFT, padx=5, pady=5)   #fermeture du frame général
 
 		# canvas TKinter
-		BG = PhotoImage(file=PATH+"\\bg.png")
+		BG = PhotoImage(file=PATH+"bg.png")
 		canvasBG = Canvas(maFenetre)
 		canvasBG.create_image(0, 0, anchor=NW, image=BG)
-		canvasBG.pack(side=RIGHT,padx=10,pady=10)
+		canvasBG.pack(side=AUTO,padx=10,pady=10)
 
 
 		#Timers
