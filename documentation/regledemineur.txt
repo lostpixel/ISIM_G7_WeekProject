@@ -1,0 +1,19 @@
+Règles du Coronaviseur
+
+Les bases:
+-Vous êtes face à une tableau composé de cases dont le contenu est caché. Certaines cachent des virus. Vous perdez si vous en révélez. Pour gagner, il faut révéler toutes les cases ne contenant pas de virus
+-Révéler une case ne contenant pas de virus affiche le nombre de virus parmi les 8 cases voisines. Utilisez ces informations pour déduires où se situent les virus.
+-Pour révéler une case, un clique-gauche suffit. Pour marquer une case sans la révéler (si vous pensez qu'un virus s'y trouve), faites alors un clic-droit. (un deuxième permet d'effacer le marqueur)
+-Si vous révélez une case n'étant voisine d'aucun virus, toutes celle-ci seront automatiquement révélées. Cela permet de révéler une large partie du tableau d'un coup.
+
+Le mode propagation:
+-Vous gagnez et perdez de la même façon que le mode classique. 
+-Tout les 5 coups le virus se propage. De nouveaux virus apparaissent dans les cases cachées.
+
+Le mode apocalypse:
+Il existe désormais 4 types de virus.
+-Le virus rouge est le même que celui des modes précédent et vous fera perdre la partie.
+-Le virus rose créera des virus en plus dans les cases cachées.
+-Le virus orange ajoutera du temps au timer. 
+-Le virus violet ajoutera des coups au compteur
+A vous de prendre des risques calculé afin de marquer le meilleur score possible sans tomber sur une mauvaise bombe.
