@@ -262,6 +262,7 @@ class PlateauApocalypse(PlateauTemplate):
 			self._nbrMines +=1
 			
 	def CreuserCase(self, ligne, colonne):									##action de la fonction à tester: instancie une case / modifie gameOver - 
+	
 		#Creuse la case à la position (ligne, colonne)
 		
 		#On récupère l'index de la case

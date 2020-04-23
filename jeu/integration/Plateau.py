@@ -18,11 +18,9 @@ liste appel d'autre fonction :
 	- PlacerMines
 		- SignalerMineAuxVoisins
 """
-
 from abc import ABC
 from Case import Case
 import random
-import fenetre
 
 class PlateauTemplate(ABC):
 	#Plateau du Démineur
@@ -81,9 +79,6 @@ class PlateauTemplate(ABC):
 			La colonne est donc le reste de la division ci-dessus
 			"""
 			self._cases[caseIndex].DevenirBombe(1) #La Case devient une bombe
-			
-			Button(fenetre, text='BOMBE', borderwidth=1).grid(row=ligne, column=colonne)
-			
 			self.SignalerMineAuxVoisins(ligne, colonne)
 			self._nbrMines +=1
 			
@@ -114,15 +109,22 @@ class PlateauTemplate(ABC):
 	def Gagner(self):
 		#Verifie que le nombre de case cachées est égale au nombre de mine
 		return self._nbrCasesCachees == self._nbrMines
-		
+	
+	def FinirPartie(self):
+		self._gameOver = True
+	
 	def Perdre(self):
 		return self._gameOver
 		
 	def JouerCoup(self):
 		self._nbrCoups += 1
-	
-	def Draper(self, ligne, colonne):
 		
+
+	
+	def CalculerScore(self, timer):
+		return timer
+	
+	def Draper(self, ligne, colonne):		
 		#Pose ou retire un drapeau à la position (ligne, colonne)
 		#Incrémente ou décrémente le nombre de nbr_drapeau du plateau en fonction
 		#ne fait rien si le contenu de la cellule est visible
@@ -163,8 +165,8 @@ class PlateauTemplate(ABC):
 					for C in range(max(0,colonne-1), min(colonne+2, self._largeur)):
 						#Et on les joue
 						self.CreuserCase(L, C)
-			#On finit par vérifier si la partie est gagnée
-			self._gameOver = self.Gagner()
+				#On finit par vérifier si la partie est gagnée
+				self._gameOver = self.Gagner()
 			
 	def DessinerTableau(self):
 		offsetY = 0
@@ -218,8 +220,10 @@ class PlateauPropagation(PlateauTemplate):
 
 	def __init__(self, hauteur, largeur, nbr_mines):
 		PlateauTemplate.__init__(self, hauteur, largeur, nbr_mines)
+		self.__nbrMinesItinial = nbr_mines
 		
-	
+	def CalculerScore(self, timer):
+		score = timer + self._nbrMines - self.__nbrMinesItinial
 
 	def CreuserCase(self, ligne, colonne):
 		PlateauTemplate.CreuserCase(self, ligne, colonne)
@@ -232,6 +236,8 @@ class PlateauApocalypse(PlateauTemplate):
 
 	def __init__(self, hauteur, largeur, nbr_mines):
 		PlateauTemplate.__init__(self, hauteur, largeur, nbr_mines)
+		self.__timerPlus = 0
+		self.__nbrBombesNonLétales = 0
 
 	def PlacerMines(self, nbr_mines):
 		nbr_spcl_mines = nbr_mines // 5
@@ -258,6 +264,9 @@ class PlateauApocalypse(PlateauTemplate):
 			self.SignalerMineAuxVoisins(ligne, colonne)
 			self._nbrMines +=1
 			
+	def CalculerScore(self, timer):
+		score = timer*2 + self._nbrCoups - self.__nbrBombesNonLétales
+			
 	def CreuserCase(self, ligne, colonne):
 		#Creuse la case à la position (ligne, colonne)
 		
@@ -275,13 +284,17 @@ class PlateauApocalypse(PlateauTemplate):
 			#Si la case est minée, la partie est perdue
 			#Donc, si EstBombe est différent de 0
 			if (case.EstUneBombe() > 0):
+				if(case.EstUneBombe() > 1):
+					self.__nbrBombesNonLétales += 1
 				if (case.EstUneBombe() == 1):
 					self._gameOver = True
 				if (case.EstUneBombe() == 2):
 					for X in range(1, 5):
-						self.PlacerSuperMines(1, X)
+						nbrCasesLibres = self._nbrCasesCachees - self._nbrMines
+						if nbrCasesLibres > 10:
+							self.PlacerSuperMines(1, X)
 				if (case.EstUneBombe() == 3):
-					print("+ 10 secondes")
+					self.__timerPlus += 10
 				if (case.EstUneBombe() == 4):
 					self._nbrCoups += 5
 				
