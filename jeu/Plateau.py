@@ -158,8 +158,8 @@ class PlateauTemplate(ABC):
 					for C in range(max(0,colonne-1), min(colonne+2, self._largeur)):
 						#Et on les joue
 						self.CreuserCase(L, C)
-			#On finit par vérifier si la partie est gagnée
-			self._gameOver = self.Gagner()
+				#On finit par vérifier si la partie est gagnée
+				self._gameOver = self.Gagner()
 			
 	def DessinerTableau(self):
 		offsetY = 0
