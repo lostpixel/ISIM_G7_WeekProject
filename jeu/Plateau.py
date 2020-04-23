@@ -159,8 +159,8 @@ class PlateauTemplate(ABC):
 			
 			#Si la case n'a aucune bombe dans parmi ses voisins
 			if (case.ANbrBombesVoisins() == 0):
-				ligne = caseIndex // self._largeur
-				colonne = caseIndex % self._largeur
+				ligne = index // self._largeur
+				colonne = index % self._largeur
 				#On parcout ses voisins
 				for L in range(max(0,ligne-1), min(ligne+2, self._hauteur)):
 					for C in range(max(0,colonne-1), min(colonne+2, self._largeur)):
