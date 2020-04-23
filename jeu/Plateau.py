@@ -165,7 +165,7 @@ class PlateauTemplate(ABC):
 				for L in range(max(0,ligne-1), min(ligne+2, self._hauteur)):
 					for C in range(max(0,colonne-1), min(colonne+2, self._largeur)):
 						#Et on les joue
-						self.CreuserCase(L, C)
+						self.CreuserCase(L * self._largeur + C)
 				#On finit par vérifier si la partie est gagnée
 				self._gameOver = self.Gagner()
 			
