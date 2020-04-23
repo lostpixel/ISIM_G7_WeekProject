@@ -37,6 +37,7 @@ from tkinter import ttk
 from timeit import default_timer
 from tkinter import messagebox
 from Plateau import *
+
 PATH = os.path.dirname(os.path.realpath('__file__'))
 
 
@@ -49,16 +50,16 @@ PATH = os.path.dirname(os.path.realpath('__file__'))
 					# Button(maFenetre,text='TEST', borderwidth=1).grid(row=ligne, column=colonne)
 
 
-def ClicSourie(event):
-    Clic = event.keysym
-    print(touche)	
+# def ClicSourie(event):
+    # Clic = event.keysym
+    # print(touche)	
 
 
 
 def create_plateau():
 	fen=Toplevel()
 	#fen.title("Plateau de jeu")
-	fen.configure(bg="#151515")
+	fen.configure(bg="#f0f0f0")#bg="#151515"
 	fen.resizable(width=False, height=False)
 		
 	#Permet un affichage centré sur l'écran
@@ -72,21 +73,26 @@ def create_plateau():
 	fen.geometry(geo)
 	 
 	btn_fermer=Button(fen, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=fen.destroy)
-	btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
+	btn_fermer.pack(side=BOTTOM, padx=10, pady=10) #justify=CENTER,
 
 	
-	# drapeau = PhotoImage(file = PATH+r'\.png')
-	# bombeA = PhotoImage(file = PATH+r'\.png')
-	# bombeB = PhotoImage(file = PATH+r'\.png')
-	# bombeC = PhotoImage(file = PATH+r'\.png')
-	# bombeD = PhotoImage(file = PATH+r'\.png')
+	drapeau = PhotoImage(file = PATH+r'\img\docteur.png')
+	virusA = PhotoImage(file = PATH+r'\img\virusA.png')
+	#virusA = PhotoImage(Image.open('\img\virusA.png').resize((400,100)))
+	virusB = PhotoImage(file = PATH+r'\img\virusB.png')
+	virusC = PhotoImage(file = PATH+r'\img\virusC.png')
+	virusD = PhotoImage(file = PATH+r'\img\virusD.png')
 
 	# canvas = Canvas(fen, width=500, height=400)
 	# canvas.focus_set()
 	# canvas.bind("<Button-1>", ClicSourie)
 	# canvas.pack()
 
-
+	def Clic (ref):
+		plateau.CreuserCase(b,ref)
+		if plateau.Perdre() :
+			#messagebox.showinfo(message="Vous avez perdu")
+			print("Perdu !")
 
 
 	
@@ -99,28 +105,34 @@ def create_plateau():
 		for colonne in range(plateau._largeur):
 #            labels.append(Label(can, text=v,bd=1,justify=CENTER,relief=SUNKEN,font=("Helvetica", 9),image="",width=1,height=1,padx=9,pady=5))
 #            labels[a].grid(column=i,row=j)			
-			if plateau._gameOver and plateau._cases[index].EstUneBombe() > 0 :
-				contenu = 'M'
-				print("M")
-			elif not plateau._cases[index].EstVisible() :
-				if plateau._cases[index].EstDrapeau() > 0 :
-					contenu = 'D'
-					print("D")
-				else : 
-					contenu = 'X' 
-					print("X")
+			# if plateau._gameOver and plateau._cases[index].EstUneBombe() > 0 :
+				# contenu = 'M'
+				# print("M")
+			# elif not plateau._cases[index].EstVisible() :
+				# if plateau._cases[index].EstDrapeau() > 0 :
+					# contenu = 'D'
+					# print("D")
+				# else : 
+					# contenu = 'X' 
+					# print("X")
+			# else : contenu = "%d " % (plateau._cases[index].ANbrBombesVoisins())
+			contenu = ''
+			img = ''
+			if plateau._cases[index].EstUneBombe() :
+				#contenu = 'M'
+				img=drapeau
 			else : contenu = "%d " % (plateau._cases[index].ANbrBombesVoisins())
 			
-			labels.append(Label(canvasPlateau, text=contenu,bd=1,justify=CENTER,relief=SUNKEN,font=("Helvetica", 9),image="",width=1,height=1,padx=9,pady=5))
+			labels.append(Label(canvasPlateau, text=contenu,bd=1,font=("Helvetica", 9),width=2,height=2,image=img,padx=9,pady=5))
 			labels[index].grid(column=colonne,row=ligne)
 			
-			b.append(Button(canvasPlateau,text='X',image="",padx=8,pady=1)) 
+			b.append(Button(canvasPlateau,text='',font=("Helvetica", 9),width=2,height=2,image="",padx=8,pady=1)) #relief=SUNKEN,
 			b[index].grid(column=colonne,row=ligne)
 			#b[a].bind("<Button-3>",lambda i,ref=a: afficheFlag(ref))
 			# b[a].bind("<Button-1>",lambda i,ref=a: click(ref))
 			#b[index].bind("<Button-1>",lambda i,ref=a: plateau.CreuserCase(index))
 			
-			b[index].bind("<Button-1>",lambda ligne,ref=index: plateau.CreuserCase(ref))
+			b[index].bind("<Button-1>",lambda ligne,ref=index: Clic(ref))
 			
 			b[index].config(relief=RAISED)
 			index+=1
