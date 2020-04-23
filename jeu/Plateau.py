@@ -119,10 +119,10 @@ class PlateauTemplate(ABC):
 	def JouerCoup(self):
 		self._nbrCoups += 1
 		
-	def Draper(self, ligne, colonne):
-	
 	def CalculerScore(self, timer):
 		return timer
+		
+	def Draper(self, index):
 		
 		#Pose ou retire un drapeau à la position (ligne, colonne)
 		#Incrémente ou décrémente le nombre de nbr_drapeau du plateau en fonction
@@ -130,7 +130,7 @@ class PlateauTemplate(ABC):
 		
 		
 		#On récupère l'index de la case
-		case = self._cases[ligne * self._largeur + colonne]
+		case = self._cases[index]
 		if not case.EstVisible(): #Si la case n'est pas visible
 			case.ChangeDrapeau() #On change l'état Drapeau
 			if case.EstDrapeau():
