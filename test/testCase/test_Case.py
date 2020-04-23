@@ -30,7 +30,7 @@ A faire si case.py redevient publique :
 print("\naccesTo test_Case.py (__main__.gauche) ... ok")
 
 from Case import Case			#0
-print("\n Private method don't you dare to grobe, you'r pervert !")
+print("\n Private method don't you dare to grobe it, you'r pervert !")
 #import unittest	
 
 """
