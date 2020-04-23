@@ -138,11 +138,11 @@ class PlateauTemplate(ABC):
 			else:
 				self._nbrDrapeaux -=1
 				
-	def CreuserCase(self, ligne, colonne):
+	def CreuserCase(self, index):
 		#Creuse la case à la position (ligne, colonne)
 		
 		#On récupère l'index de la case
-		case = self._cases[ligne * self._largeur + colonne]
+		case = self._cases[index]
 		
 		#Si la case est visible ou a un drapeau, on ne fait rien
 		if case.EstVisible() or case.EstDrapeau():
@@ -159,6 +159,8 @@ class PlateauTemplate(ABC):
 			
 			#Si la case n'a aucune bombe dans parmi ses voisins
 			if (case.ANbrBombesVoisins() == 0):
+				ligne = caseIndex // self._largeur
+				colonne = caseIndex % self._largeur
 				#On parcout ses voisins
 				for L in range(max(0,ligne-1), min(ligne+2, self._hauteur)):
 					for C in range(max(0,colonne-1), min(colonne+2, self._largeur)):
