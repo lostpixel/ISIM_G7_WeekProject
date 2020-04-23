@@ -1,4 +1,4 @@
-Règles du Coronaviseur
+Règles du Decoronaviseur
 
 Les bases:
 -Vous êtes face à une tableau composé de cases dont le contenu est caché. Certaines cachent des virus. Vous perdez si vous en révélez. Pour gagner, il faut révéler toutes les cases ne contenant pas de virus
