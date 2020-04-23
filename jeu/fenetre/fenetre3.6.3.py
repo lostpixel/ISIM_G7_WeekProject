@@ -33,9 +33,32 @@ from timeit import default_timer
 from tkinter import messagebox
 PATH = os.path.dirname(os.path.realpath('__file__'))
 
+
+
+
+def resultat():      
+    fen=Toplevel()
+    fen.title("Sore")
+    fen.configure(bg="#151515")
+    fen.resizable(width=False, height=False)
+        
+    #Permet un affichage centré sur l'écran
+    screen_x=int(fen.winfo_screenwidth())
+    screen_y=int(fen.winfo_screenheight())
+    window_x=500
+    window_y=400
+    posX=(screen_x // 2) - (window_x // 2)
+    posY=(screen_y // 2) - (window_y // 2)
+    geo="{}x{}+{}+{}".format(window_x, window_y, posX, posY)
+    fen.geometry(geo)
+     
+    btn_fermer=Button(fen, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=fen.destroy)
+    btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
+     
+
 def regle_jeu():      
     fene=Toplevel()
-    fene.title("Comment jouer au DECORONA VISEUR")
+    fene.title("Règle du Decorona viseur")
     fene.configure(bg="#151515")
     fene.resizable(width=False, height=False)
         
@@ -49,7 +72,7 @@ def regle_jeu():
     geo="{}x{}+{}+{}".format(window_x, window_y, posX, posY)
     fene.geometry(geo)
      
-    btn_fermer=Button(fene, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=quitter)
+    btn_fermer=Button(fene, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=fene.destroy)
     btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
      
     #fonction pour ouverture de la fenêtre inscription, qui contient la possibilité d'entré ce nom
@@ -138,7 +161,7 @@ class appTK:
 		frame_joueur=LabelFrame(frame_general, text="Player", padx=5, pady=5)
 		frame_joueur.configure(bg="#151515", fg="green")
 
-		label_nom=Label(frame_joueur, width=20)
+		label_nom=Label(frame_joueur, width=20, bg="#151515", fg="white")
 		label_nom.pack()
 
 				#bouton pour introduire et enregistrer les données son nom
@@ -201,14 +224,14 @@ class appTK:
 		frame_mode=LabelFrame(frame_option, text="Mode", bg="#151515", fg="#FC8C00")
 		frame_mode.configure(bg="#151515")
 				#bouton mode classique
-		btn_classique=Button(frame_niveau, width=20, text="Classique", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_classique=Button(frame_mode, width=20, text="Classique", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
 		btn_classique.pack(padx=5, pady=5)
 				#bouton mode propagation
-		btn_propagation=Button(frame_niveau, width=20, text="Propagation", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_propagation=Button(frame_mode, width=20, text="Propagation", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
 		btn_propagation.pack(padx=5, pady=5)
 				#bouton mmode apocalypse
-		btn_apocalypse=Button(frame_niveau, width=20, text="Apocalypse", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
-		btn_apocalypse.pack(padx=2, pady=2)
+		btn_apocalypse=Button(frame_mode, width=20, text="Apocalypse", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_apocalypse.pack(padx=5, pady=5)
 
 		frame_mode.pack(side=BOTTOM, padx=2, pady=2)
 		frame_option.grid(row=3, column=0, padx=5, pady=5)
@@ -222,7 +245,7 @@ class appTK:
 		btn_jouer.pack(padx=5, pady=5)        
 
 				#bouton score
-		btn_score=Button(frame_bouton, width=20, text="Résultat", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_score=Button(frame_bouton, width=20, text="Résultat", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=resultat)
 		btn_score.pack(padx=5, pady=5)
 
 				#bouton règles du jeux
@@ -239,9 +262,9 @@ class appTK:
 				# canvas : affiche l'image d'ouverture du jeu
 		BG = PhotoImage(file= PATH+r'\bg.png')
 		maFenetre.BG = BG
-		canvasBG = Canvas(maFenetre, width=780, height=780 ) # , bg="#151515"
+		canvasBG = Canvas(maFenetre, width=780, height=800 ) # , bg="#151515"
 		canvasBG.create_image(0, 0, anchor=NW, image=BG)
-		canvasBG.pack(side=RIGHT,padx=40,pady=40)
+		canvasBG.pack(side=RIGHT,padx=50,pady=50)
 
 		#appel de fonction : associé au timer
 		default_timer()
