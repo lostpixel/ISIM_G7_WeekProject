@@ -119,19 +119,18 @@ class PlateauTemplate(ABC):
 	def JouerCoup(self):
 		self._nbrCoups += 1
 		
-
-	
 	def CalculerScore(self, timer):
 		return timer
-	
-	def Draper(self, ligne, colonne):		
+		
+	def Draper(self, index):
+		
 		#Pose ou retire un drapeau à la position (ligne, colonne)
 		#Incrémente ou décrémente le nombre de nbr_drapeau du plateau en fonction
 		#ne fait rien si le contenu de la cellule est visible
 		
 		
 		#On récupère l'index de la case
-		case = self._cases[ligne * self._largeur + colonne]
+		case = self._cases[index]
 		if not case.EstVisible(): #Si la case n'est pas visible
 			case.ChangeDrapeau() #On change l'état Drapeau
 			if case.EstDrapeau():
@@ -139,11 +138,12 @@ class PlateauTemplate(ABC):
 			else:
 				self._nbrDrapeaux -=1
 				
-	def CreuserCase(self, ligne, colonne):
+	def CreuserCase(self, b, index):
+		print("CREUSE !")
 		#Creuse la case à la position (ligne, colonne)
 		
 		#On récupère l'index de la case
-		case = self._cases[ligne * self._largeur + colonne]
+		case = self._cases[index]
 		
 		#Si la case est visible ou a un drapeau, on ne fait rien
 		if case.EstVisible() or case.EstDrapeau():
@@ -152,19 +152,23 @@ class PlateauTemplate(ABC):
 		else:
 			case.RendreVisible()
 			self._nbrCasesCachees -=1
+			b[index].grid_forget() #supprimer boutton dans le grid TKinter de fenetre 
 			
 			#Si la case est minée, la partie est perdue
 			#Donc, si EstBombe est différent de 0
 			if (case.EstUneBombe() > 0):
 				self._gameOver = True
+				
 			
 			#Si la case n'a aucune bombe dans parmi ses voisins
 			if (case.ANbrBombesVoisins() == 0):
+				ligne = index // self._largeur
+				colonne = index % self._largeur
 				#On parcout ses voisins
 				for L in range(max(0,ligne-1), min(ligne+2, self._hauteur)):
 					for C in range(max(0,colonne-1), min(colonne+2, self._largeur)):
 						#Et on les joue
-						self.CreuserCase(L, C)
+						self.CreuserCase(b, L * self._largeur + C)
 				#On finit par vérifier si la partie est gagnée
 				self._gameOver = self.Gagner()
 			
