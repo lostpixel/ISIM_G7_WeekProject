@@ -139,7 +139,7 @@ class PlateauTemplate(ABC):
 			else:
 				self._nbrDrapeaux -=1
 			print("test drap")	
-	def CreuserCase(self, b, index):
+	def CreuserCase(self, b, index,img):
 		
 		#Creuse la case à la position (ligne, colonne)
 		
@@ -156,12 +156,15 @@ class PlateauTemplate(ABC):
 			print("CREUSE !")
 			case.RendreVisible()
 			self._nbrCasesCachees -=1
-			b[index].grid_forget() #supprimer boutton dans le grid TKinter de fenetre 
-			
+			#b[index].grid_forget() #supprimer boutton dans le grid TKinter de fenetre 
+			#b[index].configure(image=img)
 			#Si la case est minée, la partie est perdue
 			#Donc, si EstBombe est différent de 0
 			if (case.EstUneBombe() > 0):
 				self._gameOver = True
+				b[index].configure(image=img)
+			else :
+				b[index].grid_forget()
 				
 			
 			#Si la case n'a aucune bombe dans parmi ses voisins

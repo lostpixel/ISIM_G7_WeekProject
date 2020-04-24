@@ -10,29 +10,52 @@ VERSON 3.6.3
 - FONCTION resultat
 - FONCTION regle_jeu
 - FONCTION inscription
-
 - CLASS appTK
 - DECLARATION de la loop()
 +++++++++++++ STRUCURE DE LA CLASS application ++++++++++++++++++++++++++
 class application
 |--->def __init__
 		|---> configuration de la fenetre (titre,bg,taille,centré)
+		|---> Fonction pour quitter le jeux 
+		|---> Fonction pour le timer
 		|---> Barre de menu (var = bar_menu,creation,déclarations)
-		|---> Frame
-		|--->
-		|--->
-		|--->
+		|---> frame_general.pack(LEFT)
 
-	- fonction
+		|---> ---> label_nom.pack - frame_joueur
+		|---> ---> btn_inscription.pack() - frame_joueur
+		|---> ---> frame_joueur.grid(row=0, column=0) - frame_general
+
+		|---> ---> ---> exte_bombe.grid(row=4, column=0) - frame_compteur
+		|---> ---> ---> decompte_bombegrid(row=4, column=0) - frame_compteur
+		|---> ---> ---> texte_cases.grid(row=5, column=0) - frame_compteur
+		|---> ---> ---> frame_timer.grid(row=2, column=0) - frame_compteur
+		|---> ---> frame_compteur.grid(row=1, column=0) - frame_general
+
+		|---> ---> frame_niveau.pack (side=TOP) - frame_option
+		|---> ---> frame_optiongrid (row=3, column=0) - frame_general
+		|---> ---> frame_niveau
+		|---> ---> frame_option
+		|---> ---> btn_debutant
+		|---> ---> frame_niveau
+		|---> ---> btn_debutant
+		|---> ---> btn_moyen
+		|---> ---> btn_expert
+		|---> ---> frame_mode
+		|---> ---> btn_classique
+		|---> ---> btn_propagation
+		|---> ---> btn_apocalypse
 +++++++++++++++ STRUCTURE TKinter ++++++++++++++++++++++++++++++++
-pack LEFT - pack RIGHT
-grid in pack LEFT
-canvas in pack RIGHT
+maFenetre : fentre principale
+		|---> pack LEFT - pack RIGHT
+		|---> grid in pack LEFT
+		|---> canvas in pack RIGHT
+fen : fenetre de jeu
+fenetre : fenetre d'inscription
+
 """
 
 b = []
 labels = []
-#niveau ='global'
 
 # IMPORTATION
 import os
@@ -45,23 +68,6 @@ from user import User
 import json
 
 PATH = os.path.dirname(os.path.realpath('__file__'))
-
-# def niveau():
-        # global nb_col, nb_ligne, nb_bombes
-        # niveau=choix.get()
-        # if niveau == 1 :
-            # nb_col, nb_lig, nb_bombes = 9, 9, 10
-        # elif niveau == 2 :
-            # nb_col, nb_lig, nb_bombes = 16, 16, 40
-        # else :
-            # nb_col, nb_lig, nb_bombes = 30, 30, 99
-
-        # plateu.configure(width=(bn_coldim)+gap, height=(nb_ligdim)+gap)  #taille plateu par niveau
-
-
-
-	
-
 
 def create_plateau():
 	#if ((niveau == (1 or 2 or 3)) and (mode == (1 or 2 or 3))):
@@ -76,7 +82,7 @@ def create_plateau():
 		#Permet un affichage centré sur l'écran
 		screen_x=int(fen.winfo_screenwidth())
 		screen_y=int(fen.winfo_screenheight())
-		window_x=800
+		window_x=1000
 		window_y=650
 		posX=(screen_x // 2) - (window_x // 2)
 		posY=(screen_y // 2) - (window_y // 2)
@@ -85,8 +91,6 @@ def create_plateau():
 
 		def closeFen():
 			fen.destroy()
-			
-			
 
 		btn_fermer=Button(fen, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=closeFen)
 		btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
@@ -98,10 +102,9 @@ def create_plateau():
 		# virusD = PhotoImage(file = PATH+r'\img\virusD.png')
 
 		def ClicGauche (ref):
-			plateau.CreuserCase(b,ref)
+			plateau.CreuserCase(b,ref,virusA)
 			if plateau.Perdre() :
 				messagebox.showinfo(message="Vous avez perdu, au revoir ! ")
-				#messagebox.askretrycancel(message="Vous avez perdu ! voullez vous revenir sur la fenettre de jeu ? ") 
 				print("Perdu !")
 				fen.quit()
 			if plateau.Gagner():
@@ -113,6 +116,7 @@ def create_plateau():
 				b[ref].config(image=drapeau)
 			else : b[ref].config(image=' ')
 			print("Drape !")
+
 		nb_col = 0
 		nb_lig = 0
 		nb_bombes = 0
@@ -131,7 +135,7 @@ def create_plateau():
 			plateau = PlateauNormal(nb_col, nb_lig, nb_bombes)
 
 		plateau = PlateauNormal(nb_col, nb_lig, nb_bombes) #hauteur  - latrgeur - Nb Mine
-		canvasPlateau = Canvas (fen, width=780, height=800, bg="#151515" ) #width=780, height=800
+		canvasPlateau = Canvas (fen, width=780, height=800, bg="#151515" )
 		canvasPlateau.pack( expand=1)
 		index=0
 		labels
@@ -140,7 +144,6 @@ def create_plateau():
 				contenu = ''
 				img = ''
 				if plateau._cases[index].EstUneBombe() :
-					#contenu = 'M'
 					img=virusA
 				else : contenu = "%d " % (plateau._cases[index].ANbrBombesVoisins())
 
@@ -312,7 +315,7 @@ def inscription():
 	frame_btn_utilisateur.pack(side=BOTTOM, padx=20, pady=20)
 
 
-    #initialisation de la fenêtre principale du jeu :
+    
 
 
  #avec toutes les options de jeux.
