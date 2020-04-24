@@ -10,7 +10,7 @@
         "propagation": 100
     },
     "test": {
-        "apocalypse": 1080,
+        "apocalypse": 1110,
         "normal": 0,
         "propagation": 0
     },
@@ -65,6 +65,11 @@
         "propagation": 0
     },
     "Test": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    },
+    "zrg": {
         "apocalypse": 0,
         "normal": 0,
         "propagation": 0

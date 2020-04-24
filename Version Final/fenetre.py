@@ -103,7 +103,7 @@ def create_plateau():
 		# virusD = PhotoImage(file = PATH+r'\img\virusD.png')
 
 		def ClicGauche (ref):
-			plateau.CreuserCase(b,ref,virusA)
+			plateau.CreuserCase(b,ref,img)
 			if plateau.Perdre() :
 				messagebox.showinfo(message="Vous avez perdu, au revoir ! ")
 				print("Perdu !")

@@ -10,7 +10,7 @@
         "propagation": 100
     },
     "test": {
-        "apocalypse": 290,
+        "apocalypse": 360,
         "normal": 0,
         "propagation": 0
     },
@@ -35,6 +35,11 @@
         "propagation": 0
     },
     "qsdqsdqd": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    },
+    "dq cmkd n": {
         "apocalypse": 0,
         "normal": 0,
         "propagation": 0
