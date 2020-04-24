@@ -10,7 +10,7 @@
         "propagation": 100
     },
     "test": {
-        "apocalypse": 1790,
+        "apocalypse": 1820,
         "normal": 0,
         "propagation": 0
     },
@@ -85,6 +85,16 @@
         "propagation": 0
     },
     "fcZFfz": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    },
+    "jviv": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    },
+    "jhvhv": {
         "apocalypse": 0,
         "normal": 0,
         "propagation": 0

@@ -44,6 +44,7 @@ class application
 		|---> ---> btn_classique
 		|---> ---> btn_propagation
 		|---> ---> btn_apocalypse
+
 +++++++++++++++ STRUCTURE TKinter ++++++++++++++++++++++++++++++++
 maFenetre : fentre principale
 		|---> pack LEFT - pack RIGHT
@@ -90,7 +91,8 @@ def create_plateau():
 		fen.geometry(geo)
 
 		def closeFen():
-			fen.destroy()
+			# fen.destroy() #conserve la mainloop
+			fen.quit() 		#quitte le jeu
 
 		btn_fermer=Button(fen, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=closeFen)
 		btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
@@ -510,7 +512,7 @@ class appTK:
 
 		#appel de fonction : associé au timer
 		default_timer()
-		#updateTime()
+		updateTime()
 
 
 #Déclaration de la fenêtre principal
