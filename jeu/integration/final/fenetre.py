@@ -94,7 +94,7 @@ def create_plateau():
 	print("mode = "+"%d" %mode )
 	fen=Toplevel()
 	#fen.title("Plateau de jeu")
-	fen.configure(bg="#f0f0f0")#bg="#151515"
+	fen.configure(bg="#151515")#bg="#151515"
 	#fen.resizable(width=False, height=False)
 
 	#Permet un affichage centré sur l'écran
@@ -116,9 +116,6 @@ def create_plateau():
 	# virusB = PhotoImage(file = PATH+r'\img\virusB.png')
 	# virusC = PhotoImage(file = PATH+r'\img\virusC.png')
 	# virusD = PhotoImage(file = PATH+r'\img\virusD.png')
-	lb = Label (fen, image=virusA)
-	lb.pack(side=BOTTOM)
-
 
 	def ClicGauche (ref):
 		plateau.CreuserCase(b,ref)
@@ -146,7 +143,7 @@ def create_plateau():
 
 	plateau = PlateauNormal(nb_col, nb_lig, nb_bombes) #hauteur  - latrgeur - Nb Mine
 	canvasPlateau = Canvas (fen, width=780, height=800, bg="#151515" ) #width=780, height=800
-	canvasPlateau.pack(padx=1,pady=1)
+	canvasPlateau.pack( expand=1)
 	index=0
 	labels
 	for ligne in range(plateau._hauteur):
@@ -162,7 +159,7 @@ def create_plateau():
 			labels[index].grid(column=colonne,row=ligne)
 
 			b.append(Button(canvasPlateau,text="",image="",padx=8,pady=1))
-			b[index].grid(column=colonne,row=ligne)
+			b[index].grid( column=colonne,row=ligne)
 
 			b[index].bind("<Button-1>",lambda ligne,ref=index: ClicGauche(ref))
 			b[index].bind("<Button-3>",lambda ligne,ref=index: ClicDroit(ref))
@@ -177,7 +174,7 @@ def create_plateau():
 
 def resultat():
 	fen=Toplevel()
-	fen.title("Sore")
+	fen.title("Score")
 	fen.configure(bg="#151515")
 	fen.resizable(width=False, height=False)
 
