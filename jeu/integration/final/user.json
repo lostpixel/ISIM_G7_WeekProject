@@ -10,7 +10,7 @@
         "propagation": 100
     },
     "test": {
-        "apocalypse": 540,
+        "apocalypse": 970,
         "normal": 0,
         "propagation": 0
     },
@@ -50,6 +50,21 @@
         "propagation": 0
     },
     "MOI": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    },
+    "BLABLA": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    },
+    "BLUBLU": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    },
+    "Test": {
         "apocalypse": 0,
         "normal": 0,
         "propagation": 0
