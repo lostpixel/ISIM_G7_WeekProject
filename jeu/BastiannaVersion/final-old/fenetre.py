@@ -1,19 +1,20 @@
 """
-================================================CLASS FENETRE  =========================
-VERSON 3.6.3
+================================== CLASS FENETRE  =================================
 
-++++++++++++ STRUCURE DU FICHIER ++++++++++++++++++++++++
-- IMPORTATION
-- DECLARTION VARIABLE (PATH)
-- FONCTION niveau
-- FONCTION create_plateau ( ClicGauche() + ClicDroit() )
-- FONCTION resultat
-- FONCTION regle_jeu
-- FONCTION inscription
-- CLASS appTK
-- DECLARATION de la loop()
-+++++++++++++ STRUCURE DE LA CLASS application ++++++++++++++++++++++++++
-class application
++++++++++++++++++++++++++++++++ STRUCURE DU FICHIER ++++++++++++++++++++++++++++++++
+
+- ligne - OBJECT nom : sous fonction/objet/action/information
+- 058 - IMPORTATION : tkinter - timeit - Plateau - user - json
+- 068 - DECLARTION VARIABLE (b - labels - PATH)
+- 073 - FONCTION create_plateau => closeFen() + ClicGauche() + ClicDroit() 
+- 175 - FONCTION resultat
+- 212 - FONCTION regle_jeu
+- 270 - FONCTION inscription => addUser() 
+- 327 - CLASS appTK => __init__() + quitter() + updateTime + callNiveau1/2/3 + callMode1/2/3 
+- 521 - DECLARATION de la mainloop()
+
++++++++++++++++++++++++++ STRUCURE DE LA CLASS application ++++++++++++++++++++++++++
+class appTK
 |--->def __init__
 		|---> configuration de la fenetre (titre,bg,taille,centré)
 		|---> Fonction pour quitter le jeux 
@@ -44,18 +45,15 @@ class application
 		|---> ---> btn_classique
 		|---> ---> btn_propagation
 		|---> ---> btn_apocalypse
+		
 +++++++++++++++ STRUCTURE TKinter ++++++++++++++++++++++++++++++++
 maFenetre : fentre principale
 		|---> pack LEFT - pack RIGHT
-		|---> grid in pack LEFT
-		|---> canvas in pack RIGHT
+		|---> grid in pack LEFT - canvas in pack RIGHT
 fen : fenetre de jeu
 fenetre : fenetre d'inscription
 
 """
-
-b = []
-labels = []
 
 # IMPORTATION
 import os
@@ -67,39 +65,42 @@ from Plateau import *
 from user import User
 import json
 
+#DECLARATION
+b = []
+labels = []
 PATH = os.path.dirname(os.path.realpath('__file__'))
-
+"""================================== FONCTION create_plateau =========================================================="""
 def create_plateau():
-    if len(label_nom['text']) != 0:
-        try : 
-            print("niveau = "+"%d" %niveau)
-            print("mode = "+"%d" %mode )
-            fen=Toplevel()
-            #fen.title("Plateau de jeu")
-            fen.configure(bg="#151515")#bg="#151515"
-            #fen.resizable(width=False, height=False)
+	if len(label_nom['text']) != 0:
+        	try : 
+				print("niveau = "+"%d" %niveau)
+				print("mode = "+"%d" %mode )
+				fen=Toplevel()
+				#fen.title("Plateau de jeu")
+				fen.configure(bg="#151515")#bg="#151515"
+				#fen.resizable(width=False, height=False)
 
-            #Permet un affichage centré sur l'écran
-            screen_x=int(fen.winfo_screenwidth())
-            screen_y=int(fen.winfo_screenheight())
-            window_x=1000
-            window_y=650
-            posX=(screen_x // 2) - (window_x // 2)
-            posY=(screen_y // 2) - (window_y // 2)
-            geo="{}x{}+{}+{}".format(window_x, window_y, posX, posY)
-            fen.geometry(geo)
+				#Permet un affichage centré sur l'écran
+				screen_x=int(fen.winfo_screenwidth())
+				screen_y=int(fen.winfo_screenheight())
+				window_x=1000
+				window_y=650
+				posX=(screen_x // 2) - (window_x // 2)
+				posY=(screen_y // 2) - (window_y // 2)
+				geo="{}x{}+{}+{}".format(window_x, window_y, posX, posY)
+				fen.geometry(geo)
 
-            def closeFen():
-                fen.destroy()
-
-            btn_fermer=Button(fen, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=closeFen)
-            btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
-            caseVide = PhotoImage(file = PATH+r'\png\caseVide.png')
-            drapeau = PhotoImage(file = PATH+r'\gif\docteur.gif')
-            virusA = PhotoImage(file = PATH+r'\png\virusA.png')
-            # virusB = PhotoImage(file = PATH+r'\img\virusB.png')
-            # virusC = PhotoImage(file = PATH+r'\img\virusC.png')
-            # virusD = PhotoImage(file = PATH+r'\img\virusD.png')
+				def closeFen():
+					#fen.destroy()	#conseve la mainloop
+					fen.quit() 		#quitte le jeu
+				btn_fermer=Button(fen, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=closeFen)
+				btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
+				caseVide = PhotoImage(file = PATH+r'\png\caseVide.png')
+				drapeau = PhotoImage(file = PATH+r'\gif\docteur.gif')
+				virusA = PhotoImage(file = PATH+r'\png\virusA.png')
+				# virusB = PhotoImage(file = PATH+r'\img\virusB.png')
+				# virusC = PhotoImage(file = PATH+r'\img\virusC.png')
+				# virusD = PhotoImage(file = PATH+r'\img\virusD.png')
 
             def ClicGauche (ref):
                 plateau.CreuserCase(b,ref,img)
@@ -167,6 +168,10 @@ def create_plateau():
                     index+=1
         except : messagebox.showerror(title = "Error config",message ="Veuillez selection un niveau ET un mode" )
     else : messagebox.showerror(title = "Error config",message ="Veuillez vous enregistrer" )
+	
+"""==============================================  FONCTION resultat  ================================================================="""
+
+
 def resultat():
 	fen=Toplevel()
 	fen.title("Score")
@@ -200,6 +205,8 @@ def resultat():
 
 	btn_fermer=Button(fen, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=fen.destroy)
 	btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
+	
+"""======================================  FONCTION regle_jeu  ================================================================"""
 
 
 def regle_jeu():
@@ -257,11 +264,9 @@ def regle_jeu():
             """
 	T.insert(END, quote)   
 
-
+"""=================================  FONCTION inscription  ====================================================================="""	
 	#fonction pour ouverture de la fenêtre inscription, qui contient la possibilité d'entré ce nom
 	#ainsi que un bouton pour valider.
-
-
 def inscription():
 	fenetre=Toplevel()
 	fenetre.title("CORONA VISEUR : Inscription")
@@ -315,11 +320,9 @@ def inscription():
 	btn_annuler.pack(side=RIGHT, padx=10, pady=10)
 
 	frame_btn_utilisateur.pack(side=BOTTOM, padx=20, pady=20)
-
-
-    
-
-
+	
+"""=================================  CLASS appTK  ================================================================="""
+ 
  #avec toutes les options de jeux.
 class appTK:
     def __init__(self, master):
@@ -513,9 +516,6 @@ class appTK:
         #appel de fonction : associé au timer
         default_timer()
         updateTime()
-        
-		
-
 
 #Déclaration de la fenêtre principal
 maFenetre=Tk()								#start loop
