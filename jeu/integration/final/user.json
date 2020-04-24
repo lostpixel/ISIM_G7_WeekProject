@@ -10,7 +10,7 @@
         "propagation": 100
     },
     "test": {
-        "apocalypse": 340,
+        "apocalypse": 380,
         "normal": 0,
         "propagation": 0
     },
@@ -45,6 +45,11 @@
         "propagation": 0
     },
     "Gilles": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    },
+    "MOI": {
         "apocalypse": 0,
         "normal": 0,
         "propagation": 0
