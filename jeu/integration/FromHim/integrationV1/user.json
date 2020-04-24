@@ -1,0 +1,42 @@
+{
+    "victor": {
+        "apocalypse": 100,
+        "normal": 100,
+        "propagation": 100
+    },
+    "severine": {
+        "apocalypse": 100,
+        "normal": 100,
+        "propagation": 100
+    },
+    "test": {
+        "apocalypse": 290,
+        "normal": 0,
+        "propagation": 0
+    },
+    "": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    },
+    "qsdqsd": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    },
+    "Gille": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    },
+    "qsdqsdqsd": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    },
+    "qsdqsdqd": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    }
+}

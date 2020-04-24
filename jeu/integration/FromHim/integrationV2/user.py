@@ -37,8 +37,8 @@ class User(object):
 
 
 
-# u = User('test')
-# u.score("apocalypse", 10)
-# data = u.getData()
-# print(data["apocalypse"])
-# u.save()
+u = User('test')
+u.score("apocalypse", 10)
+data = u.getData()
+print(data["apocalypse"])
+u.save()

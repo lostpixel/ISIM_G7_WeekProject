@@ -1,0 +1,5 @@
+version 1 : 
+add json -> boutton valider dans inscription qui enregistre dans le JSON
+
+version 2 :
+nommage label depuis JSON
