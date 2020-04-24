@@ -1,19 +1,20 @@
 """
-================================================CLASS FENETRE  =========================
-VERSON 3.6.3
+================================== CLASS FENETRE  =================================
 
-++++++++++++ STRUCURE DU FICHIER ++++++++++++++++++++++++
-- IMPORTATION
-- DECLARTION VARIABLE (PATH)
-- FONCTION niveau
-- FONCTION create_plateau ( ClicGauche() + ClicDroit() )
-- FONCTION resultat
-- FONCTION regle_jeu
-- FONCTION inscription
-- CLASS appTK
-- DECLARATION de la loop()
-+++++++++++++ STRUCURE DE LA CLASS application ++++++++++++++++++++++++++
-class application
++++++++++++++++++++++++++++++++ STRUCURE DU FICHIER ++++++++++++++++++++++++++++++++
+
+- ligne - OBJECT nom : sous fonction/objet/action/information
+- 058 - IMPORTATION : tkinter - timeit - Plateau - user - json
+- 068 - DECLARTION VARIABLE (b - labels - PATH)
+- 073 - FONCTION create_plateau => closeFen() + ClicGauche() + ClicDroit() 
+- 175 - FONCTION resultat
+- 212 - FONCTION regle_jeu
+- 270 - FONCTION inscription => addUser() 
+- 327 - CLASS appTK => __init__() + quitter() + updateTime + callNiveau1/2/3 + callMode1/2/3 
+- 521 - DECLARATION de la mainloop()
+
++++++++++++++++++++++++++ STRUCURE DE LA CLASS application ++++++++++++++++++++++++++
+class appTK
 |--->def __init__
 		|---> configuration de la fenetre (titre,bg,taille,centré)
 		|---> Fonction pour quitter le jeux 
@@ -44,15 +45,16 @@ class application
 		|---> ---> btn_classique
 		|---> ---> btn_propagation
 		|---> ---> btn_apocalypse
+		
 +++++++++++++++ STRUCTURE TKinter ++++++++++++++++++++++++++++++++
 maFenetre : fentre principale
 		|---> pack LEFT - pack RIGHT
-		|---> grid in pack LEFT
-		|---> canvas in pack RIGHT
+		|---> grid in pack LEFT - canvas in pack RIGHT
 fen : fenetre de jeu
 fenetre : fenetre d'inscription
 
 """
+
 
 b = []
 labels = []
@@ -90,7 +92,7 @@ def create_plateau():
             fen.geometry(geo)
 
             def closeFen():
-                fen.destroy()
+                fen.quit()
 
             btn_fermer=Button(fen, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=closeFen)
             btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
@@ -105,8 +107,8 @@ def create_plateau():
                 plateau.CreuserCase(b,ref,img)
                 if plateau.Perdre() :
                     messagebox.showinfo(message="Vous avez perdu, au revoir ! ")
-                    print("Perdu !")
-                    #fen.quit()
+                    #print("Perdu !")
+                    fen.quit()
                 if plateau.Gagner():
                     messagebox.showinfo(message="Félicitations vous avez gagné ")
                     print("Gagné !")

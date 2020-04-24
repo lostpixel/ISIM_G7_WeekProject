@@ -1,6 +1,6 @@
-import fenetre2
+import fenetre
 
 if __name__ == "__main__":
 	maFenetre=Tk()								#start loop
-	app = fenetre2.appTK(maFenetre)
+	app = fenetre.appTK(maFenetre)
 	maFenetre.mainloop()
