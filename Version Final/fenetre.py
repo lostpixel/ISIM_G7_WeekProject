@@ -71,102 +71,101 @@ import json
 PATH = os.path.dirname(os.path.realpath('__file__'))
 
 def create_plateau():
-	print("Valeur testInscrit 3 = "+str(testInscrit))
-	if testInscrit : 
-		try : 
-			print("niveau = "+"%d" %niveau)
-			print("mode = "+"%d" %mode )
-			fen=Toplevel()
-			#fen.title("Plateau de jeu")
-			fen.configure(bg="#151515")#bg="#151515"
-			#fen.resizable(width=False, height=False)
 
-			#Permet un affichage centré sur l'écran
-			screen_x=int(fen.winfo_screenwidth())
-			screen_y=int(fen.winfo_screenheight())
-			window_x=1000
-			window_y=650
-			posX=(screen_x // 2) - (window_x // 2)
-			posY=(screen_y // 2) - (window_y // 2)
-			geo="{}x{}+{}+{}".format(window_x, window_y, posX, posY)
-			fen.geometry(geo)
+	try : 
+		print("niveau = "+"%d" %niveau)
+		print("mode = "+"%d" %mode )
+		fen=Toplevel()
+		#fen.title("Plateau de jeu")
+		fen.configure(bg="#151515")#bg="#151515"
+		#fen.resizable(width=False, height=False)
 
-			def closeFen():
-				fen.destroy()
+		#Permet un affichage centré sur l'écran
+		screen_x=int(fen.winfo_screenwidth())
+		screen_y=int(fen.winfo_screenheight())
+		window_x=1000
+		window_y=650
+		posX=(screen_x // 2) - (window_x // 2)
+		posY=(screen_y // 2) - (window_y // 2)
+		geo="{}x{}+{}+{}".format(window_x, window_y, posX, posY)
+		fen.geometry(geo)
 
-			btn_fermer=Button(fen, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=closeFen)
-			btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
+		def closeFen():
+			fen.destroy()
 
-			drapeau = PhotoImage(file = PATH+r'\gif\docteur.gif')
-			virusA = PhotoImage(file = PATH+r'\png\virusA.png')
-			# virusB = PhotoImage(file = PATH+r'\img\virusB.png')
-			# virusC = PhotoImage(file = PATH+r'\img\virusC.png')
-			# virusD = PhotoImage(file = PATH+r'\img\virusD.png')
+		btn_fermer=Button(fen, text="Fermer", width=15, relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=closeFen)
+		btn_fermer.pack(side=BOTTOM, padx=10, pady=10)
 
-			def ClicGauche (ref):
-				plateau.CreuserCase(b,ref,virusA)
-				if plateau.Perdre() :
-					messagebox.showinfo(message="Vous avez perdu, au revoir ! ")
-					print("Perdu !")
-					fen.quit()
-				if plateau.Gagner():
-					print("Gagné !")
+		drapeau = PhotoImage(file = PATH+r'\gif\docteur.gif')
+		virusA = PhotoImage(file = PATH+r'\png\virusA.png')
+		# virusB = PhotoImage(file = PATH+r'\img\virusB.png')
+		# virusC = PhotoImage(file = PATH+r'\img\virusC.png')
+		# virusD = PhotoImage(file = PATH+r'\img\virusD.png')
 
-			def ClicDroit (ref):
-				plateau.Draper(ref)
-				if plateau._cases[ref].EstDrapeau() :
-					b[ref].config(image=drapeau)
-				else : b[ref].config(image=' ')
-				print("Drape !")
+		def ClicGauche (ref):
+			plateau.CreuserCase(b,ref,virusA)
+			if plateau.Perdre() :
+				messagebox.showinfo(message="Vous avez perdu, au revoir ! ")
+				print("Perdu !")
+				fen.quit()
+			if plateau.Gagner():
+				print("Gagné !")
 
-			nb_col = 0
-			nb_lig = 0
-			nb_bombes = 0
-			if niveau == 1 :
-				nb_col, nb_lig, nb_bombes = 9, 9, 10
-			elif niveau == 2 :
-				nb_col, nb_lig, nb_bombes = 16, 16, 40
-			else :
-				nb_col, nb_lig, nb_bombes = 16, 30, 99
-				
-			if mode == 3 :
-				plateau = PlateauApocalypse(nb_col, nb_lig, nb_bombes)
-			elif mode == 2 :
-				plateau = PlateauPropagation(nb_col, nb_lig, nb_bombes)
-			else :
-				plateau = PlateauNormal(nb_col, nb_lig, nb_bombes)
+		def ClicDroit (ref):
+			plateau.Draper(ref)
+			if plateau._cases[ref].EstDrapeau() :
+				b[ref].config(image=drapeau)
+			else : b[ref].config(image=' ')
+			print("Drape !")
 
-			plateau = PlateauNormal(nb_col, nb_lig, nb_bombes) #hauteur  - latrgeur - Nb Mine
-			canvasPlateau = Canvas (fen, width=780, height=800, bg="#151515" )
-			canvasPlateau.pack( expand=1)
-			index=0
-			labels
-			for ligne in range(plateau._hauteur):
-				for colonne in range(plateau._largeur):
-					contenu = ''
-					img = ''
-					if plateau._cases[index].EstUneBombe() :
-						img=virusA
-					else : contenu = "%d " % (plateau._cases[index].ANbrBombesVoisins())
+		nb_col = 0
+		nb_lig = 0
+		nb_bombes = 0
+		if niveau == 1 :
+			nb_col, nb_lig, nb_bombes = 9, 9, 10
+		elif niveau == 2 :
+			nb_col, nb_lig, nb_bombes = 16, 16, 40
+		else :
+			nb_col, nb_lig, nb_bombes = 16, 30, 99
+			
+		if mode == 3 :
+			plateau = PlateauApocalypse(nb_col, nb_lig, nb_bombes)
+		elif mode == 2 :
+			plateau = PlateauPropagation(nb_col, nb_lig, nb_bombes)
+		else :
+			plateau = PlateauNormal(nb_col, nb_lig, nb_bombes)
 
-					labels.append(Label(canvasPlateau,text=contenu,bd=1,justify=CENTER,relief=SUNKEN,font=("Helvetica", 9),image='',width=1,height=1,padx=9,pady=5))#
-					labels[index].grid(column=colonne,row=ligne)
+		plateau = PlateauNormal(nb_col, nb_lig, nb_bombes) #hauteur  - latrgeur - Nb Mine
+		canvasPlateau = Canvas (fen, width=780, height=800, bg="#151515" )
+		canvasPlateau.pack( expand=1)
+		index=0
+		labels
+		for ligne in range(plateau._hauteur):
+			for colonne in range(plateau._largeur):
+				contenu = ''
+				img = ''
+				if plateau._cases[index].EstUneBombe() :
+					img=virusA
+				else : contenu = "%d " % (plateau._cases[index].ANbrBombesVoisins())
 
-					b.append(Button(canvasPlateau,text="",image="",padx=8,pady=1))
-					b[index].grid( column=colonne,row=ligne)
+				labels.append(Label(canvasPlateau,text=contenu,bd=1,justify=CENTER,relief=SUNKEN,font=("Helvetica", 9),image='',width=1,height=1,padx=9,pady=5))#
+				labels[index].grid(column=colonne,row=ligne)
 
-					b[index].bind("<Button-1>",lambda ligne,ref=index: ClicGauche(ref))
-					b[index].bind("<Button-3>",lambda ligne,ref=index: ClicDroit(ref))
-					b[index].config(relief=RAISED)
-					index+=1
-			index=0
-			for ligne in range(plateau._hauteur):
-				for colonne in range(plateau._largeur):
-					if plateau._cases[index].EstUneBombe():
-						labels[index].config(image=virusA ,relief=GROOVE,bd=1,width=25,height=25)#
-					index+=1
-		except : messagebox.showerror(title = "Error config",message ="Veuillez selection un niveau ET un mode" )
-	else : messagebox.showerror(title = "Error config",message ="Vous n'êtes pas inscrit !" )
+				b.append(Button(canvasPlateau,text="",image="",padx=8,pady=1))
+				b[index].grid( column=colonne,row=ligne)
+
+				b[index].bind("<Button-1>",lambda ligne,ref=index: ClicGauche(ref))
+				b[index].bind("<Button-3>",lambda ligne,ref=index: ClicDroit(ref))
+				b[index].config(relief=RAISED)
+				index+=1
+		index=0
+		for ligne in range(plateau._hauteur):
+			for colonne in range(plateau._largeur):
+				if plateau._cases[index].EstUneBombe():
+					labels[index].config(image=virusA ,relief=GROOVE,bd=1,width=25,height=25)#
+				index+=1
+	except : messagebox.showerror(title = "Error config",message ="Veuillez selection un niveau ET un mode" )
+
 
 def resultat():
 	fen=Toplevel()

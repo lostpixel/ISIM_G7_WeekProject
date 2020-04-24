@@ -10,7 +10,7 @@
         "propagation": 100
     },
     "test": {
-        "apocalypse": 1150,
+        "apocalypse": 1170,
         "normal": 0,
         "propagation": 0
     },
@@ -74,17 +74,7 @@
         "normal": 0,
         "propagation": 0
     },
-    "ujfuy": {
-        "apocalypse": 0,
-        "normal": 0,
-        "propagation": 0
-    },
-    "khiyf": {
-        "apocalypse": 0,
-        "normal": 0,
-        "propagation": 0
-    },
-    "ljsbfv": {
+    "Player": {
         "apocalypse": 0,
         "normal": 0,
         "propagation": 0
