@@ -1,0 +1,22 @@
+{
+    "victor": {
+        "apocalypse": 100,
+        "normal": 100,
+        "propagation": 100
+    },
+    "severine": {
+        "apocalypse": 100,
+        "normal": 100,
+        "propagation": 100
+    },
+    "test": {
+        "apocalypse": 160,
+        "normal": 0,
+        "propagation": 0
+    },
+    "": {
+        "apocalypse": 0,
+        "normal": 0,
+        "propagation": 0
+    }
+}
