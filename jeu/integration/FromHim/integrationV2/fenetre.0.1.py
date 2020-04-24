@@ -32,6 +32,7 @@ canvas in pack RIGHT
 
 b = [] 
 labels = []
+#niveau ='global' 
 
 # IMPORTATION
 import os
@@ -42,6 +43,7 @@ from tkinter import messagebox
 from Plateau import *
 
 PATH = os.path.dirname(os.path.realpath('__file__'))
+
 
 
 # def niveau():
@@ -55,8 +57,40 @@ PATH = os.path.dirname(os.path.realpath('__file__'))
             # nb_col, nb_lig, nb_bombes = 30, 30, 99
 
         # plateu.configure(width=(bn_coldim)+gap, height=(nb_ligdim)+gap)  #taille plateu par niveau
+		
+		
+		
+		
+
+def callNiveau1():
+	global niveau
+	niveau = int('1')
+	print("val = 1")
+def callNiveau2():
+	global niveau 
+	niveau = int('2')
+	print("val = 2")
+def callNiveau3():
+	global niveau 
+	niveau = int('3')
+	print("val = 3")
+	
+def callMode1():
+	global mode
+	mode = int('1')
+	print("val = 1")
+def callMode2():
+	global mode 
+	mode = int('2')
+	print("val = 2")
+def callMode3():
+	global mode 
+	mode = int('3')
+	print("val = 3")
 
 def create_plateau():
+	print("niveau = "+"%d" %niveau)
+	print("mode = "+"%d" %mode )
 	fen=Toplevel()
 	#fen.title("Plateau de jeu")
 	fen.configure(bg="#f0f0f0")#bg="#151515"
@@ -99,9 +133,17 @@ def create_plateau():
 			b[ref].config(image=drapeau)
 		else : b[ref].config(image=' ')
 		print("Drape !")
-		
+	nb_col = 0
+	nb_lig = 0
+	nb_bombes = 0
+	if niveau == 1 :
+		nb_col, nb_lig, nb_bombes = 9, 9, 10
+	elif niveau == 2 :
+		nb_col, nb_lig, nb_bombes = 16, 16, 40
+	else :
+		nb_col, nb_lig, nb_bombes = 16, 30, 99
 	
-	plateau = PlateauNormal(12,12,1) #hauteur  - latrgeur - Nb Mine
+	plateau = PlateauNormal(nb_col, nb_lig, nb_bombes) #hauteur  - latrgeur - Nb Mine
 	canvasPlateau = Canvas (fen, width=780, height=800, bg="#151515" ) #width=780, height=800
 	canvasPlateau.pack(padx=1,pady=1)
 	index=0 
@@ -220,8 +262,12 @@ def inscription():
     frame_btn_utilisateur.pack(side=BOTTOM, padx=20, pady=20)
 
 
+
+
     #initialisation de la fenêtre principale du jeu :
-    #avec toutes les options de jeux.
+ 
+
+ #avec toutes les options de jeux.
 class appTK:
 	def __init__(self, master):	
 				#configuration de la fenêtre
@@ -306,14 +352,18 @@ class appTK:
 				#frame bouton 
 		frame_niveau=LabelFrame(frame_option, text="Niveau", bg="#151515", fg="#FC8C00")
 		frame_niveau.configure(bg="#151515")
-				#bouton niveau débutant
-		btn_debutant=Button(frame_niveau, width=20, text="Débutant", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+				
+
+		
+				
+				#bouton niveau débutant			
+		btn_debutant=Button(frame_niveau, width=20, text="Débutant", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan", command=callNiveau1)
 		btn_debutant.pack(padx=5, pady=5)
 				#bouton niveau moyen
-		btn_moyen=Button(frame_niveau, width=20, text="Moyen", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_moyen=Button(frame_niveau, width=20, text="Moyen", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan",command=callNiveau2)
 		btn_moyen.pack(padx=5, pady=5)
 				#bouton niveau expert
-		btn_expert=Button(frame_niveau, width=20, text="Expert", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_expert=Button(frame_niveau, width=20, text="Expert", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan",command=callNiveau3)
 		btn_expert.pack(padx=5, pady=5)
 		frame_niveau.pack(side=TOP, padx=5, pady=5)
 
@@ -321,13 +371,13 @@ class appTK:
 		frame_mode=LabelFrame(frame_option, text="Mode", bg="#151515", fg="#FC8C00")
 		frame_mode.configure(bg="#151515")
 				#bouton mode classique
-		btn_classique=Button(frame_mode, width=20, text="Classique", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_classique=Button(frame_mode, width=20, text="Classique", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan",command = callMode1)
 		btn_classique.pack(padx=5, pady=5)
 				#bouton mode propagation
-		btn_propagation=Button(frame_mode, width=20, text="Propagation", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_propagation=Button(frame_mode, width=20, text="Propagation", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan",command = callMode2)
 		btn_propagation.pack(padx=5, pady=5)
 				#bouton mmode apocalypse
-		btn_apocalypse=Button(frame_mode, width=20, text="Apocalypse", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan")
+		btn_apocalypse=Button(frame_mode, width=20, text="Apocalypse", relief=GROOVE, bg="#990505", fg="white", cursor="spraycan",command = callMode3)
 		btn_apocalypse.pack(padx=5, pady=5)
 
 		frame_mode.pack(side=BOTTOM, padx=2, pady=2)
