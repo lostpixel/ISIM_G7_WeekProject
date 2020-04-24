@@ -142,6 +142,13 @@ def create_plateau():
 		nb_col, nb_lig, nb_bombes = 16, 16, 40
 	else :
 		nb_col, nb_lig, nb_bombes = 16, 30, 99
+		
+	if mode == 3 :
+		plateau = PlateauApocalypse(nb_col, nb_lig, nb_bombes)
+	elif mode == 2 :
+		plateau = PlateauPropagation(nb_col, nb_lig, nb_bombes)
+	else :
+		plateau = PlateauNormal(nb_col, nb_lig, nb_bombes)
 
 	plateau = PlateauNormal(nb_col, nb_lig, nb_bombes) #hauteur  - latrgeur - Nb Mine
 	canvasPlateau = Canvas (fen, width=780, height=800, bg="#151515" ) #width=780, height=800
